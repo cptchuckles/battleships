@@ -1,0 +1,41 @@
+{
+    "configurations": [
+		{
+            "name": "Clang",
+            "intelliSenseMode": "clang-x64",
+            "includePath": [
+                "${workspaceRoot}",
+                "C:/tools/msys64/mingw64/include",
+                "C:/tools/msys64/mingw64/include/SFML",
+                "C:/tools/msys64/mingw64/include/SFML/Auido",
+                "C:/tools/msys64/mingw64/include/SFML/Graphics",
+                "C:/tools/msys64/mingw64/include/SFML/Network",
+                "C:/tools/msys64/mingw64/include/SFML/System",
+                "C:/tools/msys64/mingw64/include/SFML/Window",
+                "C:/tools/msys64/mingw64/include/c++/8.2.0",
+                "C:/tools/msys64/mingw64/include/c++/8.2.0/tr1",
+                "C:/tools/msys64/mingw64/include/c++/8.2.0/x86_64-w64-mingw32",
+                "C:/tools/msys64/mingw64/x86_64-w64-mingw32/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "__GNUC__=8",
+                "__cdecl=__attribute__((__cdecl__))"
+            ],
+            "browse": {
+                "path": [
+                    "C:/tools/msys64/mingw64/lib/*",
+                    "C:/tools/msys64/mingw64/include",
+                    "C:/tools/msys64/mingw64/include/c++/8.2.0",
+                    "C:/tools/msys64/mingw64/include/c++/8.2.0/tr1",
+                    "C:/tools/msys64/mingw64/include/c++/8.2.0/x86_64-w64-mingw32",
+                    "C:/tools/msys64/mingw64/x86_64-w64-mingw32/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}
