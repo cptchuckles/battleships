@@ -48,8 +48,8 @@ public:
 		grid.clear();
 	}
 
-	void setCell(int x, int y, CellType=CellType::OPEN);
-	CellType getCell(int x, int y);
+	void setCell(int col, int row, CellType=CellType::OPEN);
+	CellType getCell(int col, int row);
 
 	void Draw(sf::RenderTarget& target, int x, int y);
 };
