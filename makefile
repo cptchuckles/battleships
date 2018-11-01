@@ -3,14 +3,14 @@
 TARGET=build/a.exe
 
 #OBJS is the name(s) of the source files
-OBJS = src/main.o
+OBJS = src/main.o src/Board.o
 
 #Paths
 INCLUDE_PATHS = -IC:/tools/msys64/mingw64/include/SFML
 LIB_PATHS = -LC:/tools/msys64/mingw64/lib
 
 #Compiler and linker flags
-COMPILER_FLAGS = #-mwindows
+COMPILER_FLAGS = -w #-mwindows
 LINKER_FLAGS = -llibsfml-graphics -llibsfml-audio -llibsfml-network -llibsfml-system -llibsfml-window
 
 
@@ -32,4 +32,5 @@ $(TARGET) : $(OBJS)
 	g++ -o $@ -c $< $(INCLUDE_PATHS) $(LIB_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS)
 
 #Define the prerequisites of each object
-src/main.o :
+src/main.o : src/Board.h
+src/Board.o : src/Board.h
