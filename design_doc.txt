@@ -1,0 +1,44 @@
+battleships
+
+there should be a board for each player: an array of spots (A-I,1-10), empty or full (with a ship). each player has 5 ships:
+- aircraft carrier (5)
+- battleship (4)
+- destroyer (3)
+- submarine (3)
+- patrol (2)
+
+the ships have to be lines of a consecutive length.
+
+the player can place his ships one by one on his board. he should be able to enter [A..Z].\d. to place the ship and space to rotate the ship. there only have to be 2 orientations since the ships are just lengths of spots.
+
+when the function is called for place the ship, it checks collision against OOB and other ships and if so it asks to choose again.
+
+the computer gets to place his ships randomly.
+
+the "choose place ship" callback will be called by the game state singleton. it will leverage polymorphism.
+
+therefor there is a "player" class, and a "controller" interface. the user's controller class takes input from the mouse and screen. the AI's controller class just clicks randomly.
+
+after ships are placed the game begins. player goes first.
+
+moves are entered as [A..Z].\d. at this point there are no more "ships", only spots in the grids as empty or filled. hits are guesses on filled spots.
+
+the AI will guess partially randomly at first. it must remember if it had a hit last, and if so what direction it took. it has to remember where all of its hits are, and group them by physical connectedness. once there are ship-groups in memory, the AI may randomly decide to revisit them if there is not a 100% certainty that it is not a destroyed ship.
+ the first hit will have no direction. after the first hit, the computer will pick randomly 1 of the 4 adjacent cells. when it chooses one, it will also remember the opposite direction. if it is another hit, it remembers the direction it went in for that hit. if not, it chooses one of the other 3 spaces.
+Assuming all player pieces remain:
+ - after 2 consecutive hits, there is a 20% chance this is the patrol boat and it will strike randomly next. otherwise it will log 2 future spaces: the one in the same direction and the one on the opposite end of where it first hit (if open).
+ - after 3 consecutive hits, there is a 50% chance this is either the submarine or the destroyer, and it will shoot randomly again.
+ - after 4 consecutive hits, there is a 50% chance this is the battleship and it will shoot randomly again.
+ - after 5 consecutive hits, this was the aircraft carrier, and it must shoot randomly again.
+Subtract respective percentages based on how likely it is that another ship was sunk. This must be recalculated any time the AI decides to revisit a ship.
+When the AI chooses to fire randomly again, it will tag the current ship with a percentage for how likely it was a finished ship.
+This means the AI automatically has 5 "ship groups" in memory, but none of them are pre-marked for which ship they may be. The only tricky part is that there are two 4-space ships.
+
+Each board keeps track of how many ship-spaces are left (it doesn't need to think about ships, only spaces). With each hit, the board queries if there are any other ship-spaces left. If not, the opposing player wins.
+
+
+goal 1: get the screen to render boards
+- determine screen size
+- create board class
+ - create space struct
+- draw 2 boards
