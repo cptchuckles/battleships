@@ -3,7 +3,6 @@
  */
 
 #include <vector>
-#include <memory>
 
 namespace sf
 {
@@ -25,29 +24,25 @@ private:
 	std::vector<CellType> grid;
 	int rows, cols;
 
-	std::unique_ptr<sf::Shape> open_cell = nullptr;
-	std::unique_ptr<sf::Shape> full_cell = nullptr;
-	std::unique_ptr<sf::Shape> hit_cell = nullptr;
+	sf::Shape& open_cell;
+	sf::Shape& full_cell;
+	sf::Shape& hit_cell;
 
-	Board() {}
+	Board() = delete;
 
 public:
 	int cell_size;
 
 
 	Board(int cellsize, int cols, int rows,
-		std::unique_ptr<sf::Shape> open,
-		std::unique_ptr<sf::Shape> full,
-		std::unique_ptr<sf::Shape> hit) : cell_size{cellsize}, rows{rows}, cols{cols}
+		sf::Shape& open,
+		sf::Shape& full,
+		sf::Shape& hit) : cell_size{cellsize}, rows{rows}, cols{cols}, open_cell{open}, full_cell{full}, hit_cell{hit}
 	{
 		int size = rows*cols;
 		grid.reserve(size);
 		for(int i=0; i<size; i++)
 			grid[i] = CellType::OPEN;
-
-		open_cell = std::move(open);
-		full_cell = std::move(full);
-		hit_cell = std::move(hit);
 	}
 	~Board() {
 		grid.clear();

@@ -28,14 +28,11 @@ int main()
 	full.setFillColor(sf::Color::White);
 	hit.setFillColor(sf::Color::Red);
 
-	Board board{ 64, 9, 10,
-		std::make_unique<sf::CircleShape>(open),
-		std::make_unique<sf::CircleShape>(full),
-		std::make_unique<sf::CircleShape>(hit)
-	};
+	Board board_1{ 64, 9, 10, open, full, hit };
+	Board board_2{ 64, 9, 10, open, full, hit };
 
-	board.setCell(5, 7, Board::CellType::FULL);
-	board.setCell(2, 9, Board::CellType::HIT);
+	board_1.setCell(5, 7, Board::CellType::FULL);
+	board_1.setCell(2, 9, Board::CellType::HIT);
 
 	while (window.isOpen())
 	{
@@ -49,7 +46,8 @@ int main()
 		window.clear();
 		window.draw(caption);
 
-		board.Draw(window, 0, 64);
+		board_1.Draw(window, 0, 64);
+		board_2.Draw(window, 0, 750);
 
 		window.display();
 	}

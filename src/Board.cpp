@@ -18,21 +18,21 @@ void Board::Draw(sf::RenderTarget& target, int x, int y)
 			dx += x;
 			dy += y;
 
-			open_cell->setPosition(dx, dy);
-			full_cell->setPosition(dx, dy);
-			hit_cell->setPosition(dx, dy);
+			open_cell.setPosition(dx, dy);
+			full_cell.setPosition(dx, dy);
+			hit_cell.setPosition(dx, dy);
 
 			int cell = cols*r+c;
 
 			switch(grid[cell]) {
 			case CellType::OPEN:
-				target.draw(*open_cell);
+				target.draw(open_cell);
 				break;
 			case CellType::FULL:
-				target.draw(*full_cell);
+				target.draw(full_cell);
 				break;
 			case CellType::HIT:
-				target.draw(*hit_cell);
+				target.draw(hit_cell);
 			};
 		}
 	}
