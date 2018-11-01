@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <memory>
 #include "Board.h"
 
 const int WindowWidth = 640;
