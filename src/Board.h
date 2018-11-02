@@ -3,6 +3,7 @@
  */
 
 #include <vector>
+#include <memory>
 
 namespace sf
 {
@@ -21,8 +22,8 @@ public:
 	};
 
 private:
+	int cols, rows;
 	std::vector<CellType> grid;
-	int rows, cols;
 
 	sf::Shape& open_cell;
 	sf::Shape& full_cell;

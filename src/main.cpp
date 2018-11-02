@@ -1,8 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include "Board.h"
+#include "KeyboardBuffer.h"
 
 const int WindowWidth = 640;
-const int WindowHeight = 1408;
+const int WindowHeight = 1508;
 
 int main()
 {
@@ -17,8 +18,7 @@ int main()
 	if(! arial.loadFromFile("c:/windows/fonts/arial.ttf"))
 		return 1;
 
-	sf::Text caption = {"Window works!", arial, 64U};
-	//caption.setPosition( 15.0F, 15.0F );
+	sf::Text caption = {"fuck", arial, 36U};
 
 	sf::CircleShape open{32};
 	sf::CircleShape full{32};
@@ -27,11 +27,13 @@ int main()
 	full.setFillColor(sf::Color::White);
 	hit.setFillColor(sf::Color::Red);
 
-	Board board_1{ 64, 9, 10, open, full, hit };
-	Board board_2{ 64, 9, 10, open, full, hit };
+	Board board_1{64, 9, 10, open, full, hit};
+	Board board_2{64, 9, 10, open, full, hit};
 
 	board_1.setCell(5, 7, Board::CellType::FULL);
 	board_1.setCell(2, 9, Board::CellType::HIT);
+
+	KeyboardBuffer kbuf;
 
 	while (window.isOpen())
 	{
@@ -43,6 +45,10 @@ int main()
 		}
 
 		window.clear();
+
+		// Test the keyboard buffer with $caption
+		kbuf.Update();
+		caption.setString(kbuf.Get());
 		window.draw(caption);
 
 		board_1.Draw(window, 0, 64);

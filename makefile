@@ -3,7 +3,10 @@
 TARGET=build/a.exe
 
 #OBJS is the name(s) of the source files
-OBJS = src/main.o src/Board.o
+OBJS = \
+	src/main.o \
+	src/Board.o \
+	src/KeyboardBuffer.o
 
 #Paths
 INCLUDE_PATHS = -IC:/tools/msys64/mingw64/include/SFML
@@ -32,5 +35,6 @@ $(TARGET) : $(OBJS)
 	g++ -o $@ -c $< $(INCLUDE_PATHS) $(LIB_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS)
 
 #Define the prerequisites of each object
-src/main.o : src/Board.h
+src/main.o : src/Board.h src/KeyboardBuffer.h
 src/Board.o : src/Board.h
+src/KeyboardBuffer.o : src/KeyboardBuffer.h

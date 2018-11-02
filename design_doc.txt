@@ -37,8 +37,26 @@ This means the AI automatically has 5 "ship groups" in memory, but none of them 
 Each board keeps track of how many ship-spaces are left (it doesn't need to think about ships, only spaces). With each hit, the board queries if there are any other ship-spaces left. If not, the opposing player wins.
 
 
+TODO LIST
+- todo; ~ kindof did; x done
+
 goal 1: get the screen to render boards
-- determine screen size
-- create board class
- - create space struct
-- draw 2 boards
+== GOAL MET: 31/10/2018
+~ determine screen size
+x create board class
+	x create space struct (enum)
+x draw 2 boards
+
+goal 2: get player input
+== GOAL MET: pending DEADLINE: Mon, 5/11/2018
+- should be able to type in pos of cells to hit
+	- input processed by prompt object that handles displaying prompt
+- random cells in opponent's grid will be full but invisible to player
+- misses will turn white and hits will turn red
+- board will handle accepting a strike
+	- board will check & return win condition
+x i have to implement my own keyboard input buffer
+	x it has to be updated every frame
+	x it needs to keep track of which key was down last frame
+	x on a new frame down, the key is added to the string
+	x except backspace which reduces the buffer by 1 each stroke
