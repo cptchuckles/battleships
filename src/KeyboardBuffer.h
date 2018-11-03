@@ -1,5 +1,5 @@
 /**
- * Keyboard input stream buffer class
+ * Keyboard input buffer class
  * Because all SFML offers is a way to check if a key is held down.
  */
 
@@ -12,8 +12,7 @@ class KeyboardBuffer
 	std::string buffer;
 	std::map<int, bool> keysDown;
 
-	template<typename F>
-	void DoIfDown(int, F);
+	bool KeycodePressed(int);
 public:
 	KeyboardBuffer() {
 		// sf::Keyboard::Key encodes A..Z,0..9 as 0..35

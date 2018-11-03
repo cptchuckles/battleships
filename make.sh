@@ -1,7 +1,7 @@
-target = `grep "TARGET=" makefile | cut -d= -f2`
+target=`grep "TARGET=" makefile | cut -d= -f2`
 
 if [ -f $target ]; then
-	mingw32-make.exe clean
+	rm -f $target
 fi
 
 if [ ! -d "build" ]; then

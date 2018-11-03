@@ -12,20 +12,20 @@ void KeyboardBuffer::Update()
 	static std::string keylist = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	for(int k=0; k<=35; k++)
-		DoIfDown(k, [&]{ buffer += keylist[k]; });
+		if(KeycodePressed(k)) buffer += keylist[k];
 
-	DoIfDown(59, [&] {
+	if(KeycodePressed(59))
 		if(buffer.length() > 0) buffer.erase(buffer.length()-1);
-	});
 }
 
-template<typename F>
-void KeyboardBuffer::DoIfDown(int key, F f)
+
+bool KeyboardBuffer::KeycodePressed(int key)
 {
 	bool down = sf::Keyboard::isKeyPressed((sf::Keyboard::Key)key);
 
-	if (! keysDown[key])
-		if(down) f();
+	bool result = (down && ! keysDown[key]);
 
 	keysDown[key] = down;
+
+	return result;
 }
