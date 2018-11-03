@@ -49,12 +49,12 @@ x draw 2 boards
 
 goal 2: get player input
 == GOAL MET: pending DEADLINE: Mon, 5/11/2018
-- should be able to type in pos of cells to hit
-	- input processed by prompt object that handles displaying prompt
+x should be able to type in pos of cells to hit
+	x input processed by prompt object that handles displaying prompt
 - random cells in opponent's grid will be full but invisible to player
-- misses will turn white and hits will turn red
-- board will handle accepting a strike
-	- board will check & return win condition
+x misses will turn white and hits will turn red
+x board will handle accepting a strike
+	~ board will check & return win condition
 x i have to implement my own keyboard input buffer
 	x it has to be updated every frame
 	x it needs to keep track of which key was down last frame
