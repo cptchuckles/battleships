@@ -21,7 +21,7 @@ int main()
 	sf::Text caption = {"fuck", arial, 48U};
 
 	InputPrompt prompt = {"Try Cell:",
-	                      std::make_unique<sf::Text>(caption),
+	                      &caption,
 	                      0,1424};
 
 	sf::CircleShape open{32};

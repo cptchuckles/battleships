@@ -4,7 +4,6 @@
  */
 
 #include <string>
-#include <memory>
 #include "KeyboardBuffer.h"
 
 class Board;
@@ -26,7 +25,7 @@ public:
 	};
 
 private:
-	std::unique_ptr<sf::Text> display;
+	sf::Text* display = nullptr;
 	std::string caption;
 	KeyboardBuffer kbuf;
 
@@ -35,7 +34,7 @@ private:
 
 public:
 
-	InputPrompt(std::string caption, std::unique_ptr<sf::Text> TextResource, int x=0, int y=0) : caption{caption}, display{std::move(TextResource)}
+	InputPrompt(std::string caption, sf::Text* TextResource, int x=0, int y=0) : caption{caption}, display{TextResource}
 	{
 		SetPos(x, y);
 	}

@@ -21,6 +21,7 @@ void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
 			auto temp = display->getPosition();
 			display->setPosition(x-cell_size, dy);
 			target.draw(*display);
+			display->setPosition(temp);
 		}
 
 		for(int c=0; c<cols; c++)
@@ -33,6 +34,7 @@ void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
 				auto temp = display->getPosition();
 				display->setPosition(dx, y-cell_size);
 				target.draw(*display);
+				display->setPosition(temp);
 			}
 
 			open_cell.setPosition(dx, dy);
