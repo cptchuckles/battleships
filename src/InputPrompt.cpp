@@ -28,7 +28,12 @@ InputPrompt::Cell InputPrompt::GetCellFromInput()
 	auto input = kbuf.Get();
 	if(input.length() > 2) return cell;
 
-	cell.row = std::stoi(std::string{input[1]});
+	try {
+		cell.row = std::stoi(std::string{input[1]});
+	} catch(...) {
+		return cell;
+	}
+
 	cell.col = std::string{"ABCDEFGHI"}.find(input[0]);
 
 	if(cell.col != std::string::npos) cell.valid = true;
