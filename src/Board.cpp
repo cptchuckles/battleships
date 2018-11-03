@@ -8,15 +8,32 @@
 
 void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
 {
+	bool hasDisplay = (display != nullptr);
+
 	// Grid is cols by rows
 	for(int r=0; r<rows; r++)
 	{
+		int dy = cell_size * r;
+		dy += y;
+
+		if(hasDisplay){
+			display->setString(std::to_string(r));
+			auto temp = display->getPosition();
+			display->setPosition(x-cell_size, dy);
+			target.draw(*display);
+		}
+
 		for(int c=0; c<cols; c++)
 		{
 			int dx = cell_size * c;
-			int dy = cell_size * r;
 			dx += x;
-			dy += y;
+
+			if(hasDisplay){
+				display->setString((char)((int)'A'+c));
+				auto temp = display->getPosition();
+				display->setPosition(dx, y-cell_size);
+				target.draw(*display);
+			}
 
 			open_cell.setPosition(dx, dy);
 			full_cell.setPosition(dx, dy);

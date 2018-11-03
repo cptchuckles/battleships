@@ -18,11 +18,11 @@ int main()
 	if(! arial.loadFromFile("c:/windows/fonts/arial.ttf"))
 		return 1;
 
-	sf::Text caption = {"fuck", arial, 36U};
+	sf::Text caption = {"fuck", arial, 48U};
 
 	InputPrompt prompt = {"Try Cell:",
-						  std::make_unique<sf::Text>(caption),
-						  0,1444};
+	                      std::make_unique<sf::Text>(caption),
+	                      0,1424};
 
 	sf::CircleShape open{32};
 	sf::CircleShape full{32};
@@ -35,6 +35,8 @@ int main()
 
 	Board board_1{64, 9, 10, open, full, miss, hit};
 	Board board_2{64, 9, 10, open, full, miss, hit};
+	board_1.SetDisplayResource(&caption);
+	board_2.SetDisplayResource(&caption);
 
 	board_1.setCell(0,0, Board::CellType::FULL);
 
@@ -50,13 +52,15 @@ int main()
 		window.clear();
 
 		if(prompt.Update()) {
-			prompt.TryCellFromInput(board_1);
+			auto cell = prompt.GetCellFromInput();
+			if(cell.valid) board_1.Attack(cell.col, cell.row);
+
 			prompt.ClearInput();
 		}
 		prompt.Draw(window);
 
-		board_1.Draw(window, 64, 0, true);
-		board_2.Draw(window, 64, 704);
+		board_1.Draw(window, 64, 64, true);
+		board_2.Draw(window, 64, 770);
 
 		window.display();
 	}

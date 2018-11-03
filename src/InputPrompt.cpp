@@ -8,6 +8,8 @@
 
 bool InputPrompt::Update()
 {
+	if(!enabled) return false;
+
 	kbuf.Update();
 
 	return kbuf.UserSubmitted();
@@ -18,19 +20,12 @@ void InputPrompt::ClearInput()
 	kbuf.Clear();
 }
 
-void InputPrompt::TryCellFromInput(Board& board)
-{
-	auto cell = parseCell(kbuf.Get());
-	if(!cell.valid) return;
-
-	board.Attack(cell.col, cell.row);
-}
-
-InputPrompt::Cell InputPrompt::parseCell(std::string input)
+InputPrompt::Cell InputPrompt::GetCellFromInput()
 {
 	Cell cell = { 0,0, false };
 
 	// Valid formats are [A-I].[0-9].
+	auto input = kbuf.Get();
 	if(input.length() > 2) return cell;
 
 	cell.row = std::stoi(std::string{input[1]});

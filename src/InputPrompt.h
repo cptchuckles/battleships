@@ -19,18 +19,19 @@ namespace sf
 
 class InputPrompt
 {
+public:
+	struct Cell {
+		int col, row;
+		bool valid;
+	};
+
+private:
 	std::unique_ptr<sf::Text> display;
 	std::string caption;
 	KeyboardBuffer kbuf;
 
 	bool enabled = true;
 
-	struct Cell {
-		int col, row;
-		bool valid;
-	};
-
-	Cell parseCell(std::string input);
 
 public:
 
@@ -42,7 +43,7 @@ public:
 	bool Update();
 	void Enable() { enabled = true; }
 	void Disable() { enabled = false; }
-	void TryCellFromInput(Board& opponent);
+	Cell GetCellFromInput();
 	void ClearInput();
 
 	void SetCaption(std::string newCap) { caption = newCap; }

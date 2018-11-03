@@ -8,6 +8,7 @@ namespace sf
 {
 	class RenderTarget;
 	class Shape;
+	class Text;
 }
 
 
@@ -29,6 +30,7 @@ private:
 	sf::Shape& full_cell;
 	sf::Shape& miss_cell;
 	sf::Shape& hit_cell;
+	sf::Text* display = nullptr;
 
 	Board() = delete;
 
@@ -55,6 +57,7 @@ public:
 	CellType getCell(int col, int row);
 	bool Attack(int col, int row);
 	bool CheckDefeated();
+	void SetDisplayResource(sf::Text* TextResource) { display = TextResource; }
 
 	void Draw(sf::RenderTarget& target, int x, int y, bool hidden=false);
 };
