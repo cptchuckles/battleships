@@ -6,7 +6,7 @@
 #include "Board.h"
 
 
-void Board::Draw(sf::RenderTarget& target, int x, int y)
+void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
 {
 	// Grid is cols by rows
 	for(int r=0; r<rows; r++)
@@ -20,6 +20,7 @@ void Board::Draw(sf::RenderTarget& target, int x, int y)
 
 			open_cell.setPosition(dx, dy);
 			full_cell.setPosition(dx, dy);
+			miss_cell.setPosition(dx, dy);
 			hit_cell.setPosition(dx, dy);
 
 			int cell = cols*r+c;
@@ -29,7 +30,10 @@ void Board::Draw(sf::RenderTarget& target, int x, int y)
 				target.draw(open_cell);
 				break;
 			case CellType::FULL:
-				target.draw(full_cell);
+				hidden ? target.draw(open_cell) : target.draw(full_cell);
+				break;
+			case CellType::MISS:
+				target.draw(miss_cell);
 				break;
 			case CellType::HIT:
 				target.draw(hit_cell);
@@ -55,4 +59,29 @@ Board::CellType Board::getCell(int col, int row)
 
 	int cell = cols*row + col;
 	return grid[cell];
+}
+
+bool Board::Attack(int col, int row)
+{
+	switch (getCell(col, row))
+	{
+	case CellType::FULL :
+		setCell(col, row, CellType::HIT);
+		return true;
+	case CellType::HIT :
+		return false;
+	default :
+		setCell(col, row, CellType::MISS);
+	}
+
+	return false;
+}
+
+bool Board::CheckDefeated()
+{
+	for(auto c : grid)
+		if(c==CellType::FULL)
+			return false;
+
+	return true;
 }

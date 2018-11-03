@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Board.h"
-#include "KeyboardBuffer.h"
+#include "InputPrompt.h"
 
 const int WindowWidth = 640;
 const int WindowHeight = 1508;
@@ -20,20 +20,23 @@ int main()
 
 	sf::Text caption = {"fuck", arial, 36U};
 
+	InputPrompt prompt = {"Try Cell:",
+						  std::make_unique<sf::Text>(caption),
+						  0,1444};
+
 	sf::CircleShape open{32};
 	sf::CircleShape full{32};
+	sf::CircleShape miss{32};
 	sf::CircleShape hit{32};
 	open.setFillColor(sf::Color::Blue);
-	full.setFillColor(sf::Color::White);
+	full.setFillColor(sf::Color{128,128,128,255});
+	miss.setFillColor(sf::Color::White);
 	hit.setFillColor(sf::Color::Red);
 
-	Board board_1{64, 9, 10, open, full, hit};
-	Board board_2{64, 9, 10, open, full, hit};
+	Board board_1{64, 9, 10, open, full, miss, hit};
+	Board board_2{64, 9, 10, open, full, miss, hit};
 
-	board_1.setCell(5, 7, Board::CellType::FULL);
-	board_1.setCell(2, 9, Board::CellType::HIT);
-
-	KeyboardBuffer kbuf;
+	board_1.setCell(0,0, Board::CellType::FULL);
 
 	while (window.isOpen())
 	{
@@ -46,13 +49,14 @@ int main()
 
 		window.clear();
 
-		// Test the keyboard buffer with $caption
-		kbuf.Update();
-		caption.setString(kbuf.Get());
-		window.draw(caption);
+		if(prompt.Update()) {
+			prompt.TryCellFromInput(board_1);
+			prompt.ClearInput();
+		}
+		prompt.Draw(window);
 
-		board_1.Draw(window, 0, 64);
-		board_2.Draw(window, 0, 750);
+		board_1.Draw(window, 64, 0, true);
+		board_2.Draw(window, 64, 704);
 
 		window.display();
 	}

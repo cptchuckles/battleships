@@ -3,7 +3,6 @@
  */
 
 #include <vector>
-#include <memory>
 
 namespace sf
 {
@@ -18,6 +17,7 @@ public:
 	enum class CellType {
 		OPEN,
 		FULL,
+		MISS,
 		HIT
 	};
 
@@ -27,18 +27,21 @@ private:
 
 	sf::Shape& open_cell;
 	sf::Shape& full_cell;
+	sf::Shape& miss_cell;
 	sf::Shape& hit_cell;
 
 	Board() = delete;
 
 public:
+	void setCell(int col, int row, CellType);
 	int cell_size;
 
 
 	Board(int cellsize, int cols, int rows,
 		sf::Shape& open,
 		sf::Shape& full,
-		sf::Shape& hit) : cell_size{cellsize}, rows{rows}, cols{cols}, open_cell{open}, full_cell{full}, hit_cell{hit}
+		sf::Shape& miss,
+		sf::Shape& hit) : cell_size{cellsize}, rows{rows}, cols{cols}, open_cell{open}, full_cell{full}, miss_cell{miss}, hit_cell{hit}
 	{
 		int size = rows*cols;
 		grid.reserve(size);
@@ -49,8 +52,9 @@ public:
 		grid.clear();
 	}
 
-	void setCell(int col, int row, CellType=CellType::OPEN);
 	CellType getCell(int col, int row);
+	bool Attack(int col, int row);
+	bool CheckDefeated();
 
-	void Draw(sf::RenderTarget& target, int x, int y);
+	void Draw(sf::RenderTarget& target, int x, int y, bool hidden=false);
 };

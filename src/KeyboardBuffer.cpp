@@ -14,8 +14,10 @@ void KeyboardBuffer::Update()
 	for(int k=0; k<=35; k++)
 		if(KeycodePressed(k)) buffer += keylist[k];
 
-	if(KeycodePressed(59))
+	if(KeycodePressed(59)) // backspace key
 		if(buffer.length() > 0) buffer.erase(buffer.length()-1);
+
+	submit = KeycodePressed(58); // return key
 }
 
 

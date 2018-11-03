@@ -12,6 +12,8 @@ class KeyboardBuffer
 	std::string buffer;
 	std::map<int, bool> keysDown;
 
+	bool submit = false;
+
 	bool KeycodePressed(int);
 public:
 	KeyboardBuffer() {
@@ -24,5 +26,9 @@ public:
 	}
 
 	void Update();
+	void Clear() { buffer.clear(); }
+
+	bool UserSubmitted() { return submit; }
+
 	std::string Get() { return buffer; }
 };
