@@ -3,6 +3,8 @@
  */
 
 #include <SFML/Graphics.hpp>
+#include <random>
+#include <ctime>
 #include "Board.h"
 
 
@@ -99,8 +101,24 @@ bool Board::Attack(int col, int row)
 bool Board::CheckDefeated()
 {
 	for(auto c : grid)
-		if(c==CellType::FULL)
+		if(c == CellType::FULL)
 			return false;
 
 	return true;
+}
+
+void Board::RandomFill(int qt)
+{
+	struct timespec tm;
+	clock_gettime(CLOCK_REALTIME, &tm);
+
+	std::minstd_rand0 e(tm.tv_nsec);
+	std::uniform_int_distribution<int> ud(0, grid.capacity()-1);
+
+	for(int i=0; i<qt; i++) {
+		int c = ud(e);
+		while(grid[c] == CellType::FULL) c = ud(e);
+
+		grid[c] = CellType::FULL;
+	}
 }

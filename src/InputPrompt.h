@@ -39,10 +39,12 @@ public:
 		SetPos(x, y);
 	}
 
-	bool Update();
+	void Update();
+	bool Submitted();
 	void Enable() { enabled = true; }
 	void Disable() { enabled = false; }
 	Cell GetCellFromInput();
+	std::string GetContent() { return kbuf.Get(); }
 	void ClearInput();
 
 	void SetCaption(std::string newCap) { caption = newCap; }

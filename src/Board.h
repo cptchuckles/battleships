@@ -15,7 +15,7 @@ namespace sf
 class Board
 {
 public:
-	enum class CellType {
+	enum CellType {
 		OPEN,
 		FULL,
 		MISS,
@@ -48,16 +48,24 @@ public:
 		int size = rows*cols;
 		grid.reserve(size);
 		for(int i=0; i<size; i++)
-			grid[i] = CellType::OPEN;
+			grid.push_back(CellType::OPEN);
 	}
 	~Board() {
 		grid.clear();
 	}
 
 	CellType getCell(int col, int row);
+
 	bool Attack(int col, int row);
 	bool CheckDefeated();
+	void RandomFill(int qt);
+	void Draw(sf::RenderTarget& target, int x, int y, bool hidden=false);
+
 	void SetDisplayResource(sf::Text* TextResource) { display = TextResource; }
 
-	void Draw(sf::RenderTarget& target, int x, int y, bool hidden=false);
+	void Clear() {
+		for(int i=0; i<grid.capacity()-1; i++)
+			grid[i] = CellType::OPEN;
+	}
+
 };

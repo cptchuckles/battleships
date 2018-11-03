@@ -2,3 +2,4 @@
 *.dll
 *.[ao]
 build/
+.vscode/

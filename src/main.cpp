@@ -20,7 +20,7 @@ int main()
 
 	sf::Text caption = {"fuck", arial, 48U};
 
-	InputPrompt prompt = {"Try Cell:",
+	InputPrompt prompt = {"Try cell: ",
 	                      &caption,
 	                      0,1424};
 
@@ -38,7 +38,9 @@ int main()
 	board_1.SetDisplayResource(&caption);
 	board_2.SetDisplayResource(&caption);
 
-	board_1.setCell(0,0, Board::CellType::FULL);
+	board_1.RandomFill(20);
+
+	int gameState = 1; // 1=in play, 2=at win screen
 
 	while (window.isOpen())
 	{
@@ -51,11 +53,34 @@ int main()
 
 		window.clear();
 
-		if(prompt.Update()) {
-			auto cell = prompt.GetCellFromInput();
-			if(cell.valid) board_1.Attack(cell.col, cell.row);
+		prompt.Update();
+		if(prompt.Submitted())
+		{
+			if(gameState==1)
+			{
+				auto cell = prompt.GetCellFromInput();
+				if(cell.valid) board_1.Attack(cell.col, cell.row);
 
-			prompt.ClearInput();
+				if(board_1.CheckDefeated()) gameState = 2;
+
+				prompt.ClearInput();
+			}
+			if(gameState==2)
+			{
+				prompt.SetCaption("You win! Again (y/n)? ");
+				auto answer = prompt.GetContent();
+
+				if(answer=="Y") {
+					board_1.Clear();
+					board_1.RandomFill(20);
+					prompt.SetCaption("Try cell: ");
+					prompt.ClearInput();
+
+					gameState = 1;
+				}
+				else if(answer=="N")
+					window.close();
+			}
 		}
 		prompt.Draw(window);
 

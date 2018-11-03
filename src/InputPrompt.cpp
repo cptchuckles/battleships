@@ -6,12 +6,15 @@
 #include "InputPrompt.h"
 #include "Board.h"
 
-bool InputPrompt::Update()
+void InputPrompt::Update()
 {
-	if(!enabled) return false;
+	if(!enabled) return;
 
 	kbuf.Update();
+}
 
+bool InputPrompt::Submitted()
+{
 	return kbuf.UserSubmitted();
 }
 
