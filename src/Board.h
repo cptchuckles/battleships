@@ -64,7 +64,7 @@ public:
 	void SetDisplayResource(sf::Text* TextResource) { display = TextResource; }
 
 	void Clear() {
-		for(int i=0; i<grid.capacity()-1; i++)
+		for(int i=0; i<grid.capacity(); i++)
 			grid[i] = CellType::OPEN;
 	}
 
