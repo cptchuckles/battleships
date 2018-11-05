@@ -112,8 +112,8 @@ void Board::RandomFill(int qt)
 	struct timespec tm;
 	clock_gettime(CLOCK_REALTIME, &tm);
 
-	std::minstd_rand0 e(tm.tv_nsec);
-	std::uniform_int_distribution<int> ud(0, grid.capacity()-1);
+	std::minstd_rand0 e{tm.tv_nsec};
+	std::uniform_int_distribution<int> ud{0, grid.capacity()-1};
 
 	for(int i=0; i<qt; i++) {
 		int c = ud(e);
