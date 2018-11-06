@@ -14,7 +14,7 @@ INCLUDE_PATHS = -IC:/tools/msys64/mingw64/include/SFML
 LIB_PATHS = -LC:/tools/msys64/mingw64/lib
 
 #Compiler and linker flags
-COMPILER_FLAGS = -w #-mwindows
+COMPILER_FLAGS = -w -std=c++17 #-mwindows
 LINKER_FLAGS = -llibsfml-graphics -llibsfml-audio -llibsfml-network -llibsfml-system -llibsfml-window
 
 

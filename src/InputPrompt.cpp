@@ -8,8 +8,6 @@
 
 void InputPrompt::Update()
 {
-	if(!enabled) return;
-
 	kbuf.Update();
 }
 
@@ -23,34 +21,36 @@ void InputPrompt::ClearInput()
 	kbuf.Clear();
 }
 
-InputPrompt::Cell InputPrompt::GetCellFromInput()
+std::optional<InputPrompt::Cell> InputPrompt::GetCellFromInput()
 {
-	Cell cell = { 0,0, false };
+	Cell cell = { 0,0 };
 
 	// Valid formats are [A-I].[0-9].
 	auto input = kbuf.Get();
-	if(input.length() > 2) return cell;
+	if(input.length() > 2) return std::nullopt;
 
 	try {
 		cell.row = std::stoi(std::string{input[1]});
 	} catch(...) {
-		return cell;
+		return std::nullopt;
 	}
 
 	cell.col = std::string{"ABCDEFGHI"}.find(input[0]);
 
-	if(cell.col != std::string::npos) cell.valid = true;
+	if(cell.col == std::string::npos) return std::nullopt;
 
-	return cell;
+	return {cell};
 }
 
-void InputPrompt::SetPos(int x, int y)
+void InputPrompt::SetPos(int newx, int newy)
 {
-	display->setPosition(x, y);
+	x = newx;
+	y = newy;
 }
 
 void InputPrompt::Draw(sf::RenderTarget& target)
 {
 	display->setString(caption + kbuf.Get());
+	display->setPosition((float)x, (float)y);
 	target.draw(*display);
 }

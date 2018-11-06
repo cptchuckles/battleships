@@ -3,6 +3,7 @@
  */
 
 #include <vector>
+#include <optional>
 
 namespace sf
 {
@@ -47,18 +48,17 @@ public:
 	{
 		int size = rows*cols;
 		grid.reserve(size);
-		for(int i=0; i<size; i++)
-			grid.push_back(CellType::OPEN);
+		std::fill_n(std::back_inserter(grid), size, CellType::OPEN);
 	}
 	~Board() {
 		grid.clear();
 	}
 
-	CellType getCell(int col, int row);
+	std::optional<CellType> getCell(int col, int row);
 
 	bool Attack(int col, int row);
 	bool CheckDefeated();
-	void RandomFill(int qt);
+	void RandomFill(unsigned int qt);
 	void Draw(sf::RenderTarget& target, int x, int y, bool hidden=false);
 
 	void SetDisplayResource(sf::Text* TextResource) { display = TextResource; }

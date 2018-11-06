@@ -59,7 +59,8 @@ int main()
 			if(gameState==1)
 			{
 				auto cell = prompt.GetCellFromInput();
-				if(cell.valid) board_1.Attack(cell.col, cell.row);
+				if(cell)
+					board_1.Attack(cell.value().col, cell.value().row);
 
 				if(board_1.CheckDefeated()) gameState = 2;
 

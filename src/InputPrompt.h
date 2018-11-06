@@ -4,6 +4,7 @@
  */
 
 #include <string>
+#include <optional>
 #include "KeyboardBuffer.h"
 
 class Board;
@@ -21,7 +22,6 @@ class InputPrompt
 public:
 	struct Cell {
 		int col, row;
-		bool valid;
 	};
 
 private:
@@ -29,25 +29,21 @@ private:
 	std::string caption;
 	KeyboardBuffer kbuf;
 
-	bool enabled = true;
+	int x, y;
 
 
 public:
 
-	InputPrompt(std::string caption, sf::Text* TextResource, int x=0, int y=0) : caption{caption}, display{TextResource}
-	{
-		SetPos(x, y);
-	}
+	InputPrompt(std::string caption, sf::Text* TextResource, int x=0, int y=0) : caption{caption}, display{TextResource}, x{x}, y{y}
+	{}
 
 	void Update();
 	bool Submitted();
-	void Enable() { enabled = true; }
-	void Disable() { enabled = false; }
-	Cell GetCellFromInput();
+	std::optional<Cell> GetCellFromInput();
 	std::string GetContent() { return kbuf.Get(); }
 	void ClearInput();
+	void SetPos(int newx, int newy);
 
 	void SetCaption(std::string newCap) { caption = newCap; }
-	void SetPos(int x, int y);
 	void Draw(sf::RenderTarget& target);
 };

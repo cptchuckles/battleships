@@ -20,10 +20,8 @@ void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
 
 		if(hasDisplay){
 			display->setString(std::to_string(r));
-			auto temp = display->getPosition();
 			display->setPosition(x-cell_size, dy);
 			target.draw(*display);
-			display->setPosition(temp);
 		}
 
 		for(int c=0; c<cols; c++)
@@ -33,10 +31,8 @@ void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
 
 			if(hasDisplay){
 				display->setString((char)((int)'A'+c));
-				auto temp = display->getPosition();
 				display->setPosition(dx, y-cell_size);
 				target.draw(*display);
-				display->setPosition(temp);
 			}
 
 			open_cell.setPosition(dx, dy);
@@ -46,7 +42,7 @@ void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
 
 			int cell = cols*r+c;
 
-			switch(grid[cell]) {
+			switch(grid.at(cell)) {
 			case CellType::OPEN:
 				target.draw(open_cell);
 				break;
@@ -70,21 +66,24 @@ void Board::setCell(int col, int row, CellType type)
 		return;
 
 	int cell = cols*row + col;
-	grid[cell] = type;
+	grid.at(cell) = type;
 }
 
-Board::CellType Board::getCell(int col, int row)
+std::optional<Board::CellType> Board::getCell(int col, int row)
 {
 	if(col > cols || row > rows || col < 0 || row < 0)
-		return CellType::OPEN;
+		return std::nullopt;
 
 	int cell = cols*row + col;
-	return grid[cell];
+	return { grid.at(cell) };
 }
 
 bool Board::Attack(int col, int row)
 {
-	switch (getCell(col, row))
+	auto cell = getCell(col, row);
+	if(!cell) return false;
+
+	switch (cell.value())
 	{
 	case CellType::FULL :
 		setCell(col, row, CellType::HIT);
@@ -107,18 +106,23 @@ bool Board::CheckDefeated()
 	return true;
 }
 
-void Board::RandomFill(int qt)
+void Board::RandomFill(unsigned int qt)
 {
+	// qt > grid.size() will infinitely loop.
+	if(qt > grid.size()) return;
+
+	// Get system time resource
 	struct timespec tm;
 	clock_gettime(CLOCK_REALTIME, &tm);
 
+	// Create random num generator functor with clock nanoseconds as seed
 	std::minstd_rand0 e{tm.tv_nsec};
-	std::uniform_int_distribution<int> ud{0, grid.capacity()-1};
+	std::uniform_int_distribution<int> ud{0, grid.size()-1};
 
 	for(int i=0; i<qt; i++) {
 		int c = ud(e);
-		while(grid[c] == CellType::FULL) c = ud(e);
+		while(grid.at(c) == CellType::FULL) c = ud(e);
 
-		grid[c] = CellType::FULL;
+		grid.at(c) = CellType::FULL;
 	}
 }
