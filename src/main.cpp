@@ -60,8 +60,7 @@ int main()
 			{
 				auto cell =
 					board_1.GetCellFromString(prompt.GetContent());
-				if(cell)
-					board_1.Attack(cell.value().col, cell.value().row);
+				if(cell) board_1.Attack(cell.value());
 
 				if(board_1.CheckDefeated()) gameState = 2;
 
