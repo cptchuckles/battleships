@@ -78,6 +78,35 @@ std::optional<Board::CellType> Board::getCell(int col, int row)
 	return { grid.at(cell) };
 }
 
+std::optional<Board::Cell> Board::GetCellFromString(std::string input)
+{
+	Cell cell = { 0,0 };
+
+	// Valid formats are [A-I].[0-9].
+	if(input.length() > 2) return std::nullopt;
+
+	try {
+		cell.row = std::stoi(std::string{input[1]});
+	} catch(...) {
+		return std::nullopt;
+	}
+
+	std::string validchars;
+	for(int i=0; i<cols; i++)
+		validchars.push_back('A'+i);
+
+	cell.col = validchars.find(input[0]);
+
+	if(cell.col == std::string::npos) return std::nullopt;
+
+	return {cell};
+}
+
+bool Board::Attack(Cell cell)
+{
+	return Attack(cell.col, cell.row);
+}
+
 bool Board::Attack(int col, int row)
 {
 	auto cell = getCell(col, row);

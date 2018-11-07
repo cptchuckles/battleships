@@ -3,11 +3,13 @@
  * handles taking input from player
  */
 
+#pragma once
+
 #include <string>
 #include <optional>
 #include "KeyboardBuffer.h"
+#include "Board.h"
 
-class Board;
 
 namespace sf
 {
@@ -19,12 +21,6 @@ namespace sf
 
 class InputPrompt
 {
-public:
-	struct Cell {
-		int col, row;
-	};
-
-private:
 	sf::Text* display = nullptr;
 	std::string caption;
 	KeyboardBuffer kbuf;
@@ -39,7 +35,7 @@ public:
 
 	void Update();
 	bool Submitted();
-	std::optional<Cell> GetCellFromInput();
+	std::optional<Board::Cell> GetCellFromInput();
 	std::string GetContent() { return kbuf.Get(); }
 	void ClearInput();
 	void SetPos(int newx, int newy);

@@ -21,9 +21,9 @@ void InputPrompt::ClearInput()
 	kbuf.Clear();
 }
 
-std::optional<InputPrompt::Cell> InputPrompt::GetCellFromInput()
+std::optional<Board::Cell> InputPrompt::GetCellFromInput()
 {
-	Cell cell = { 0,0 };
+	Board::Cell cell = { 0,0 };
 
 	// Valid formats are [A-I].[0-9].
 	auto input = kbuf.Get();

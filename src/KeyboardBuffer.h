@@ -3,6 +3,8 @@
  * Because all SFML offers is a way to check if a key is held down.
  */
 
+#pragma once
+
 #include <string>
 #include <map>
 

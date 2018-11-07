@@ -58,7 +58,8 @@ int main()
 		{
 			if(gameState==1)
 			{
-				auto cell = prompt.GetCellFromInput();
+				auto cell =
+					board_1.GetCellFromString(prompt.GetContent());
 				if(cell)
 					board_1.Attack(cell.value().col, cell.value().row);
 

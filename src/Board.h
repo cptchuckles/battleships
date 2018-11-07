@@ -2,6 +2,8 @@
  * The battlefield grid of 90 spaces
  */
 
+#pragma once
+
 #include <vector>
 #include <optional>
 
@@ -21,6 +23,10 @@ public:
 		FULL,
 		MISS,
 		HIT
+	};
+
+	struct Cell {
+		int col, row;
 	};
 
 private:
@@ -55,8 +61,10 @@ public:
 	}
 
 	std::optional<CellType> getCell(int col, int row);
+	std::optional<Cell> GetCellFromString(std::string input);
 
 	bool Attack(int col, int row);
+	bool Attack(Cell);
 	bool CheckDefeated();
 	void RandomFill(unsigned int qt);
 	void Draw(sf::RenderTarget& target, int x, int y, bool hidden=false);
