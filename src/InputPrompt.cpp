@@ -16,6 +16,11 @@ bool InputPrompt::Submitted()
 	return kbuf.UserSubmitted();
 }
 
+std::string InputPrompt::GetContent()
+{
+	return kbuf.Get();
+}
+
 void InputPrompt::ClearInput()
 {
 	kbuf.Clear();
@@ -27,9 +32,16 @@ void InputPrompt::SetPos(int newx, int newy)
 	y = newy;
 }
 
+void InputPrompt::SetCaption(std::string newCap)
+{
+	caption = newCap;
+}
+
 void InputPrompt::Draw(sf::RenderTarget& target)
 {
-	display->setString(caption + kbuf.Get());
+	if(display == nullptr) return;
+
 	display->setPosition((float)x, (float)y);
+	display->setString(caption + kbuf.Get());
 	target.draw(*display);
 }

@@ -35,10 +35,10 @@ public:
 
 	void Update();
 	bool Submitted();
-	std::string GetContent() { return kbuf.Get(); }
+	std::string GetContent();
 	void ClearInput();
 	void SetPos(int newx, int newy);
 
-	void SetCaption(std::string newCap) { caption = newCap; }
+	void SetCaption(std::string newCap);
 	void Draw(sf::RenderTarget& target);
 };
