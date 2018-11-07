@@ -21,27 +21,6 @@ void InputPrompt::ClearInput()
 	kbuf.Clear();
 }
 
-std::optional<Board::Cell> InputPrompt::GetCellFromInput()
-{
-	Board::Cell cell = { 0,0 };
-
-	// Valid formats are [A-I].[0-9].
-	auto input = kbuf.Get();
-	if(input.length() > 2) return std::nullopt;
-
-	try {
-		cell.row = std::stoi(std::string{input[1]});
-	} catch(...) {
-		return std::nullopt;
-	}
-
-	cell.col = std::string{"ABCDEFGHI"}.find(input[0]);
-
-	if(cell.col == std::string::npos) return std::nullopt;
-
-	return {cell};
-}
-
 void InputPrompt::SetPos(int newx, int newy)
 {
 	x = newx;

@@ -35,7 +35,6 @@ public:
 
 	void Update();
 	bool Submitted();
-	std::optional<Board::Cell> GetCellFromInput();
 	std::string GetContent() { return kbuf.Get(); }
 	void ClearInput();
 	void SetPos(int newx, int newy);
