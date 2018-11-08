@@ -17,7 +17,25 @@ void KeyboardBuffer::Update()
 	if(KeycodePressed(59)) // backspace key
 		if(buffer.length() > 0) buffer.erase(buffer.length()-1);
 
-	submit = KeycodePressed(58); // return key
+	returnkey = KeycodePressed(58);
+}
+
+
+void KeyboardBuffer::Clear()
+{
+	buffer.clear();
+}
+
+
+std::string KeyboardBuffer::Get() const
+{
+	return buffer;
+}
+
+
+bool KeyboardBuffer::ReturnKey() const
+{
+	return returnkey;
 }
 
 

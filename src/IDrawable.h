@@ -6,7 +6,9 @@
 
 #pragma once
 
-#include <SFML/Graphics.hpp>
+namespace sf {
+	class RenderTarget;
+}
 
 class IDrawable
 {

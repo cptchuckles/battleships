@@ -8,6 +8,12 @@
 #include <optional>
 #include "IDrawable.h"
 
+namespace sf {
+	class Shape;
+	class Text;
+	class RenderTarget;
+}
+
 
 class Board : public IDrawable
 {
@@ -26,6 +32,7 @@ public:
 private:
 	int cols, rows;
 	int x, y;
+	int cell_size;
 	bool hidden = false;
 	std::vector<CellType> grid;
 
@@ -38,12 +45,6 @@ private:
 	Board() = delete;
 
 public:
-	friend class ResourceManager;
-
-	void setCell(int col, int row, CellType);
-	int cell_size;
-
-
 	Board(int cellsize, int cols, int rows, int x, int y,
 		sf::Shape& open,
 		sf::Shape& full,
@@ -58,7 +59,8 @@ public:
 		grid.clear();
 	}
 
-	std::optional<CellType> getCell(int col, int row);
+	bool SetCell(int col, int row, CellType);
+	std::optional<CellType> GetCell(int col, int row);
 	std::optional<Cell> GetCellFromString(std::string input);
 
 	bool Attack(int col, int row);

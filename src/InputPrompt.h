@@ -7,11 +7,13 @@
 
 
 #include <string>
-#include <optional>
 #include "KeyboardBuffer.h"
-#include "Board.h"
 #include "IDrawable.h"
 
+namespace sf {
+	class Text;
+	class RenderTarget;
+}
 
 
 class InputPrompt : public IDrawable
@@ -24,8 +26,6 @@ class InputPrompt : public IDrawable
 
 
 public:
-
-	friend class ResourceManager;
 
 	InputPrompt(std::string caption, sf::Text& TextResource, int x=0, int y=0) : caption{caption}, display{TextResource}, x{x}, y{y}
 	{}

@@ -2,9 +2,9 @@
  * Input Prompt implementation
  */
 
-
+#include <SFML/Graphics.hpp>
 #include "InputPrompt.h"
-#include "Board.h"
+
 
 void InputPrompt::Update()
 {
@@ -14,7 +14,7 @@ void InputPrompt::Update()
 
 bool InputPrompt::Submitted()
 {
-	return kbuf.UserSubmitted();
+	return kbuf.ReturnKey();
 }
 
 

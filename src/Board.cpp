@@ -2,7 +2,7 @@
  * Board implementation
  */
 
-
+#include <SFML/Graphics.hpp>
 #include <random>
 #include <ctime>
 #include "Board.h"
@@ -78,17 +78,19 @@ void Board::Draw(sf::RenderTarget& target) const
 }
 
 
-void Board::setCell(int col, int row, CellType type)
+bool Board::SetCell(int col, int row, CellType type)
 {
 	if(col > cols || row > rows || col < 0 || row < 0)
-		return;
+		return false;
 
 	int cell = cols*row + col;
 	grid.at(cell) = type;
+
+	return true;
 }
 
 
-std::optional<Board::CellType> Board::getCell(int col, int row)
+std::optional<Board::CellType> Board::GetCell(int col, int row)
 {
 	if(col > cols || row > rows || col < 0 || row < 0)
 		return std::nullopt;
@@ -130,18 +132,18 @@ bool Board::Attack(Cell cell)
 
 bool Board::Attack(int col, int row)
 {
-	auto cell = getCell(col, row);
+	auto cell = GetCell(col, row);
 	if(!cell) return false;
 
 	switch (cell.value())
 	{
 	case CellType::FULL :
-		setCell(col, row, CellType::HIT);
+		SetCell(col, row, CellType::HIT);
 		return true;
 	case CellType::HIT :
 		return false;
 	default :
-		setCell(col, row, CellType::MISS);
+		SetCell(col, row, CellType::MISS);
 	}
 
 	return false;

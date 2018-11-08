@@ -1,6 +1,11 @@
+/**
+ * /g/ Coding challenge: Battleships with AI
+ */
+
 #include <SFML/Graphics.hpp>
 #include "Board.h"
 #include "InputPrompt.h"
+
 
 const int WindowWidth = 640;
 const int WindowHeight = 1508;
