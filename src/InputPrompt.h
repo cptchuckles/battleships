@@ -5,23 +5,18 @@
 
 #pragma once
 
+
 #include <string>
 #include <optional>
 #include "KeyboardBuffer.h"
 #include "Board.h"
+#include "IDrawable.h"
 
 
-namespace sf
+
+class InputPrompt : public IDrawable
 {
-	class Text;
-	class RenderTarget;
-};
-
-
-
-class InputPrompt
-{
-	sf::Text* display = nullptr;
+	sf::Text& display;
 	std::string caption;
 	KeyboardBuffer kbuf;
 
@@ -30,7 +25,9 @@ class InputPrompt
 
 public:
 
-	InputPrompt(std::string caption, sf::Text* TextResource, int x=0, int y=0) : caption{caption}, display{TextResource}, x{x}, y{y}
+	friend class ResourceManager;
+
+	InputPrompt(std::string caption, sf::Text& TextResource, int x=0, int y=0) : caption{caption}, display{TextResource}, x{x}, y{y}
 	{}
 
 	void Update();
@@ -40,5 +37,5 @@ public:
 	void SetPos(int newx, int newy);
 
 	void SetCaption(std::string newCap);
-	void Draw(sf::RenderTarget& target);
+	void Draw(sf::RenderTarget& target) const override;
 };

@@ -64,6 +64,9 @@ x i have to implement my own keyboard input buffer
 goal 3: enable placement of player ships
 == GOAL MET: pending DEADLINE: Tue 6/11/2018
 - enter a game mode where player places at least two ships
+	x need to refactor main() to go into various game modes more seamlessly, keeping code flat
+	x need modular functionality that has access to game resources
+		x make everything global!
 - use arrow keys to move and space to rotate it
 - use return to set the ship
 - ship should be confined to board bounds

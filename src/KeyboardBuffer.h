@@ -30,7 +30,7 @@ public:
 	void Update();
 	void Clear() { buffer.clear(); }
 
-	bool UserSubmitted() { return submit; }
+	bool UserSubmitted() const { return submit; }
 
-	std::string Get() { return buffer; }
+	std::string Get() const { return buffer; }
 };

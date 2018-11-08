@@ -37,6 +37,6 @@ $(TARGET) : $(OBJS)
 
 #Define the prerequisites of each object
 src/main.o : src/Board.h src/InputPrompt.h
-src/Board.o : src/Board.h
+src/Board.o : src/Board.h src/IDrawable.h
 src/KeyboardBuffer.o : src/KeyboardBuffer.h
-src/InputPrompt.o : src/InputPrompt.h src/KeyboardBuffer.h
+src/InputPrompt.o : src/InputPrompt.h src/KeyboardBuffer.h src/IDrawable.h

@@ -2,13 +2,31 @@
  * Board implementation
  */
 
-#include <SFML/Graphics.hpp>
+
 #include <random>
 #include <ctime>
 #include "Board.h"
 
 
-void Board::Draw(sf::RenderTarget& target, int x, int y, bool hidden)
+void Board::SetDisplayResource(sf::Text* TextResource)
+{
+	display = TextResource;
+}
+
+
+void Board::SetHidden(bool hide)
+{
+	hidden = hide;
+}
+
+
+void Board::Clear()
+{
+	std::fill(grid.begin(), grid.end(), CellType::OPEN);
+}
+
+
+void Board::Draw(sf::RenderTarget& target) const
 {
 	bool hasDisplay = (display != nullptr);
 
@@ -69,6 +87,7 @@ void Board::setCell(int col, int row, CellType type)
 	grid.at(cell) = type;
 }
 
+
 std::optional<Board::CellType> Board::getCell(int col, int row)
 {
 	if(col > cols || row > rows || col < 0 || row < 0)
@@ -78,11 +97,11 @@ std::optional<Board::CellType> Board::getCell(int col, int row)
 	return { grid.at(cell) };
 }
 
+
 std::optional<Board::Cell> Board::GetCellFromString(std::string input)
 {
 	Cell cell = { 0,0 };
 
-	// Valid formats are [A-I].[0-9].
 	if(input.length() > 2) return std::nullopt;
 
 	try {
@@ -97,10 +116,12 @@ std::optional<Board::Cell> Board::GetCellFromString(std::string input)
 
 	cell.col = validchars.find(input[0]);
 
-	if(cell.col == std::string::npos) return std::nullopt;
+	if(cell.col == std::string::npos)
+		return std::nullopt;
 
 	return {cell};
 }
+
 
 bool Board::Attack(Cell cell)
 {
@@ -126,6 +147,7 @@ bool Board::Attack(int col, int row)
 	return false;
 }
 
+
 bool Board::CheckDefeated()
 {
 	for(auto c : grid)
@@ -134,6 +156,7 @@ bool Board::CheckDefeated()
 
 	return true;
 }
+
 
 void Board::RandomFill(unsigned int qt)
 {

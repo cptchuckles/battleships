@@ -6,16 +6,10 @@
 
 #include <vector>
 #include <optional>
-
-namespace sf
-{
-	class RenderTarget;
-	class Shape;
-	class Text;
-}
+#include "IDrawable.h"
 
 
-class Board
+class Board : public IDrawable
 {
 public:
 	enum CellType {
@@ -31,6 +25,8 @@ public:
 
 private:
 	int cols, rows;
+	int x, y;
+	bool hidden = false;
 	std::vector<CellType> grid;
 
 	sf::Shape& open_cell;
@@ -42,15 +38,17 @@ private:
 	Board() = delete;
 
 public:
+	friend class ResourceManager;
+
 	void setCell(int col, int row, CellType);
 	int cell_size;
 
 
-	Board(int cellsize, int cols, int rows,
+	Board(int cellsize, int cols, int rows, int x, int y,
 		sf::Shape& open,
 		sf::Shape& full,
 		sf::Shape& miss,
-		sf::Shape& hit) : cell_size{cellsize}, rows{rows}, cols{cols}, open_cell{open}, full_cell{full}, miss_cell{miss}, hit_cell{hit}
+		sf::Shape& hit) : cell_size{cellsize}, cols{cols}, rows{rows}, x{x}, y{y}, open_cell{open}, full_cell{full}, miss_cell{miss}, hit_cell{hit}
 	{
 		int size = rows*cols;
 		grid.reserve(size);
@@ -66,14 +64,13 @@ public:
 	bool Attack(int col, int row);
 	bool Attack(Cell);
 	bool CheckDefeated();
+
+	void SetDisplayResource(sf::Text* TextResource);
+	void SetHidden(bool);
+
+	void Draw(sf::RenderTarget& target) const override;
+
 	void RandomFill(unsigned int qt);
-	void Draw(sf::RenderTarget& target, int x, int y, bool hidden=false);
-
-	void SetDisplayResource(sf::Text* TextResource) { display = TextResource; }
-
-	void Clear() {
-		for(int i=0; i<grid.capacity(); i++)
-			grid[i] = CellType::OPEN;
-	}
+	void Clear();
 
 };
