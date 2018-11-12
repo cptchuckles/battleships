@@ -62,12 +62,22 @@ x i have to implement my own keyboard input buffer
 	x except backspace which reduces the buffer by 1 each stroke
 
 goal 3: enable placement of player ships
-== GOAL MET: pending DEADLINE: Tue 6/11/2018
-- enter a game mode where player places at least two ships
+== GOAL MET: 12/11/2018 DEADLINE: Tue 6/11/2018 (2 coding days late)
+x enter a game mode where player places at least two ships
 	x need to refactor main() to go into various game modes more seamlessly, keeping code flat
 	x need modular functionality that has access to game resources
 		x make everything global!
-- use arrow keys to move and space to rotate it
-- use return to set the ship
-- ship should be confined to board bounds
-- ships should detect overlap and refuse to set if overlapping
+x use arrow keys to move and space to rotate it
+x use return to set the ship
+x ship should be confined to board bounds
+x ships should detect overlap and refuse to set if overlapping
+x will need a "ship laying" object
+	x has a ship struct with length, rotation, and coordinates
+	x has a ref to the board it will be laying ships on
+	x can lay a ship of any length
+	x will take player input
+	x will have methods for auto-laying ships (for the AI)
+		x this will replace the random-fill currently in place
+- BUG: ship-laying object and prompt both independently test for return key, causing the player's first ship to be laid immediately at the request for a new game
+	- must build input-tracking abstraction layer in which key-checks are eaten
+	- must check key-releases to re-enable certain keys, like return

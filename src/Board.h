@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <optional>
+#include <utility>
 #include "IDrawable.h"
 
 namespace sf {
@@ -34,6 +35,7 @@ private:
 	int x, y;
 	int cell_size;
 	bool hidden = false;
+	bool draw = true;
 	std::vector<CellType> grid;
 
 	sf::Shape& open_cell;
@@ -41,8 +43,6 @@ private:
 	sf::Shape& miss_cell;
 	sf::Shape& hit_cell;
 	sf::Text* display = nullptr;
-
-	Board() = delete;
 
 public:
 	Board(int cellsize, int cols, int rows, int x, int y,
@@ -62,6 +62,7 @@ public:
 	bool SetCell(int col, int row, CellType);
 	std::optional<CellType> GetCell(int col, int row);
 	std::optional<Cell> GetCellFromString(std::string input);
+	std::pair<int, int> GetColsRows();
 
 	bool Attack(int col, int row);
 	bool Attack(Cell);
@@ -69,6 +70,7 @@ public:
 
 	void SetDisplayResource(sf::Text* TextResource);
 	void SetHidden(bool);
+	void SetDraw(bool);
 
 	void Draw(sf::RenderTarget& target) const override;
 

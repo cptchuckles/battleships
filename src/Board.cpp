@@ -20,6 +20,12 @@ void Board::SetHidden(bool hide)
 }
 
 
+void Board::SetDraw(bool d)
+{
+	draw = d;
+}
+
+
 void Board::Clear()
 {
 	std::fill(grid.begin(), grid.end(), CellType::OPEN);
@@ -28,6 +34,8 @@ void Board::Clear()
 
 void Board::Draw(sf::RenderTarget& target) const
 {
+	if(!draw) return;
+
 	bool hasDisplay = (display != nullptr);
 
 	// Grid is cols by rows
@@ -73,8 +81,8 @@ void Board::Draw(sf::RenderTarget& target) const
 			case CellType::HIT:
 				target.draw(hit_cell);
 			};
-		}
-	}
+		} // for c
+	} // for r
 }
 
 
@@ -122,6 +130,12 @@ std::optional<Board::Cell> Board::GetCellFromString(std::string input)
 		return std::nullopt;
 
 	return {cell};
+}
+
+
+std::pair<int, int> Board::GetColsRows()
+{
+	return std::make_pair(cols, rows);
 }
 
 

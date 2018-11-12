@@ -5,11 +5,19 @@
 #include <SFML/Graphics.hpp>
 #include "Board.h"
 #include "InputPrompt.h"
+#include "ShipBuilder.h"
 
 
 const int WindowWidth = 640;
 const int WindowHeight = 1508;
-int gameState = 1; // 1=in play, 2=at win screen
+
+enum class GameState {
+	SETUP,
+	PLAY,
+	WIN
+};
+
+GameState state = GameState::SETUP;
 
 
 sf::RenderWindow window = {
@@ -20,9 +28,9 @@ sf::RenderWindow window = {
 
 sf::Font arial;
 
-sf::Text caption = {"fuck", arial, 48U};
+sf::Text caption = {"aeiou", arial, 48U};
 
-InputPrompt prompt = {"Try cell: ", caption, 0,1424};
+InputPrompt prompt = {"wew lads", caption, 0,1424};
 
 sf::CircleShape open{32};
 sf::CircleShape full{32};
@@ -33,6 +41,9 @@ Board board_2{64, 9,10, 64,770, open, full, miss, hit};
 std::vector<IDrawable*> renderer;
 
 bool init();
+void gameReset();
+void gameSetup();
+void buildEnemyShips();
 void inPlay();
 void atWinScreen();
 
@@ -52,12 +63,15 @@ int main()
 
 		window.clear();
 
-		switch(gameState)
+		switch(state)
 		{
-		case 1:
+		case GameState::SETUP :
+			gameSetup();
+			break;
+		case GameState::PLAY :
 			inPlay();
 			break;
-		case 2:
+		case GameState::WIN :
 			atWinScreen();
 			break;
 		}
@@ -86,16 +100,66 @@ bool init()
 	hit.setFillColor(sf::Color::Red);
 
 	board_1.SetDisplayResource(&caption);
-	board_1.SetHidden(true);
 	board_2.SetDisplayResource(&caption);
 
-	board_1.RandomFill(20);
+	board_1.SetHidden(true);
 
 	renderer.push_back(&board_1);
 	renderer.push_back(&board_2);
 	renderer.push_back(&prompt);
 
 	return true;
+}
+
+
+void gameReset()
+{
+	board_1.Clear();
+	board_2.Clear();
+	prompt.ClearInput();
+	state = GameState::SETUP;
+}
+
+
+void gameSetup()
+{
+	prompt.SetCaption("Arrows, space, & return");
+
+	static ShipBuilder* builder = nullptr;
+	static int ships = 4;
+	int shipSizes[] = {2,3,3,4,5};
+
+	if(! builder) builder = new ShipBuilder{board_2};
+
+	if(! builder->GetShip()) builder->ConstructShip(shipSizes[ships]);
+
+	builder->Update();
+	builder->DrawBoard(window);
+
+	if(builder->Submitted())
+	{
+		if(builder->FinalizeShip())
+			ships--;
+
+		if(ships < 0)
+		{
+			ships = 4;
+			delete builder;
+			builder = nullptr;
+			buildEnemyShips();
+			state = GameState::PLAY;
+		}
+	}
+}
+
+
+void buildEnemyShips()
+{
+	int shipSizes[] = {2,3,3,4,5};
+	ShipBuilder builder = {board_1};
+
+	for(int i=0; i<5; i++)
+		builder.RandomShip(shipSizes[i]);
 }
 
 
@@ -109,7 +173,7 @@ void inPlay()
 		auto cell = board_1.GetCellFromString(prompt.GetContent());
 		if(cell) board_1.Attack(cell.value());
 
-		if(board_1.CheckDefeated()) gameState = 2;
+		if(board_1.CheckDefeated()) state = GameState::WIN;
 
 		prompt.ClearInput();
 	}
@@ -125,13 +189,8 @@ void atWinScreen()
 	{
 		auto answer = prompt.GetContent();
 
-		if(answer=="Y") {
-			board_1.Clear();
-			board_1.RandomFill(20);
-			gameState = 1;
-
-			prompt.ClearInput();
-		}
+		if(answer=="Y")
+			gameReset();
 		else if(answer=="N")
 			window.close();
 	}
