@@ -7,7 +7,6 @@
 
 
 #include <string>
-#include "KeyboardBuffer.h"
 #include "IDrawable.h"
 
 namespace sf {
@@ -20,7 +19,7 @@ class InputPrompt : public IDrawable
 {
 	sf::Text& display;
 	std::string caption;
-	KeyboardBuffer kbuf;
+	std::string buffer;
 
 	int x, y;
 
@@ -31,7 +30,6 @@ public:
 	{}
 
 	void Update();
-	bool Submitted();
 	std::string GetContent();
 	void ClearInput();
 	void SetPos(int newx, int newy);

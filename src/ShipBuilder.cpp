@@ -5,7 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <random>
+#include <algorithm>
 #include "ShipBuilder.h"
+#include "KeyInput.h"
 
 
 bool ShipBuilder::KeyPressed(sf::Keyboard::Key key)
@@ -17,12 +19,6 @@ bool ShipBuilder::KeyPressed(sf::Keyboard::Key key)
 	keys.at(key) = down;
 
 	return result;
-}
-
-
-bool ShipBuilder::Submitted()
-{
-	return KeyPressed(sf::Keyboard::Key::Return);
 }
 
 
@@ -69,17 +65,8 @@ void ShipBuilder::Update()
 	if(KeyPressed(sf::Keyboard::Key::Space))
 		FlipShip();
 
-	dc += ship->col;
-	dr += ship->row;
-
-	// Shrink bounds based on ship orientation
-	//int goodcols = ship->vertical ? cols-1 : (cols - ship->length);
-	//int goodrows = ship->vertical ? (rows - ship->length) : rows-1;
-	//if(dc < 0 || dc > goodcols) dc = ship->col;
-	//if(dr < 0 || dr > goodrows) dr = ship->row;
-
-	ship->col = dc;
-	ship->row = dr;
+	ship->col += dc;
+	ship->row += dr;
 
 	ConfineShipToBoard();
 }
@@ -92,10 +79,8 @@ void ShipBuilder::ConfineShipToBoard()
 	int goodcols = ship->vertical ? cols-1 : (cols - ship->length);
 	int goodrows = ship->vertical ? (rows - ship->length) : rows-1;
 
-	if(ship->col > goodcols) ship->col = goodcols;
-	if(ship->col < 0) ship->col = 0;
-	if(ship->row > goodrows) ship->row = goodrows;
-	if(ship->row < 0) ship->row = 0;
+	ship->col = std::clamp(ship->col, 0, goodcols);
+	ship->row = std::clamp(ship->row, 0, goodrows);
 }
 
 
@@ -106,10 +91,6 @@ void ShipBuilder::FlipShip()
 	ship->vertical = !ship->vertical;
 
 	ConfineShipToBoard();
-	//int goodcols = ship->vertical ? cols-1 : (cols - ship->length);
-	//int goodrows = ship->vertical ? (rows - ship->length) : rows-1;
-	//if(ship->col > goodcols) ship->col = goodcols;
-	//if(ship->row > goodrows) ship->row = goodrows;
 }
 
 

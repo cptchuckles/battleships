@@ -6,6 +6,7 @@
 #include "Board.h"
 #include "InputPrompt.h"
 #include "ShipBuilder.h"
+#include "KeyInput.h"
 
 
 const int WindowWidth = 640;
@@ -62,6 +63,7 @@ int main()
 		}
 
 		window.clear();
+		KeyInput::Get().Update();
 
 		switch(state)
 		{
@@ -136,7 +138,7 @@ void gameSetup()
 	builder->Update();
 	builder->DrawBoard(window);
 
-	if(builder->Submitted())
+	if(KeyInput::Get().KeyPressed(sf::Keyboard::Key::Return))
 	{
 		if(builder->FinalizeShip())
 			ships--;
@@ -168,7 +170,7 @@ void inPlay()
 	prompt.SetCaption("Try cell: ");
 	prompt.Update();
 
-	if(prompt.Submitted())
+	if(KeyInput::Get().KeyPressed(sf::Keyboard::Key::Return))
 	{
 		auto cell = board_1.GetCellFromString(prompt.GetContent());
 		if(cell) board_1.Attack(cell.value());
@@ -185,7 +187,7 @@ void atWinScreen()
 	prompt.SetCaption("You win! Again (y/n)? ");
 	prompt.Update();
 
-	if(prompt.Submitted())
+	if(KeyInput::Get().KeyPressed(sf::Keyboard::Key::Return))
 	{
 		auto answer = prompt.GetContent();
 
