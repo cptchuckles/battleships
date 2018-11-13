@@ -78,6 +78,19 @@ x will need a "ship laying" object
 	x will take player input
 	x will have methods for auto-laying ships (for the AI)
 		x this will replace the random-fill currently in place
-- BUG: ship-laying object and prompt both independently test for return key, causing the player's first ship to be laid immediately at the request for a new game
-	- must build input-tracking abstraction layer in which key-checks are eaten
-	- must check key-releases to re-enable certain keys, like return
+x BUG: ship-laying object and prompt both independently test for return key, causing the player's first ship to be laid immediately at the request for a new game
+	x must build input-tracking abstraction layer in which key-checks are eaten
+	~ must check key-releases to re-enable certain keys, like return
+		x achieved by boolean trickery
+
+goal 4: enable enemy AI
+== GOAL MET: pending DEADLINE: Tue, 20/11/2018
+- enemy needs to attack player's board every turn
+- implement lose condition
+- attacks will be semi-random UNTIL AI makes a successful hit
+	- AI will not strike non-empty cells
+	- AI will check adjacent cells of any random hit
+	- AI will keep track, from smallest to largest, of which ships have probably been sunk
+		- will count adjacencies and check for edges with misses
+		- maybe this testing will be a whole "mode" for the AI to be in in any given turn
+	- AI will not strike in an open area smaller than the smallest non-sunk ship
