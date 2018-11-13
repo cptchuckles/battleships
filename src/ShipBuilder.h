@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <map>
 #include <SFML/Window/Keyboard.hpp>
 #include "Board.h"
 
@@ -28,9 +27,6 @@ private:
 	int cols, rows;
 	Ship* ship = nullptr;
 
-	std::map<sf::Keyboard::Key, bool> keys;
-
-	bool KeyPressed(sf::Keyboard::Key key);
 	void FlipShip();
 	void ConfineShipToBoard();
 	bool CheckSpaceFree(Ship&);
@@ -39,13 +35,6 @@ public:
 	ShipBuilder(Board& board) : board{board}
 	{
 		board.SetDraw(false);
-
-		keys[sf::Keyboard::Key::Left] = false;
-		keys[sf::Keyboard::Key::Right] = false;
-		keys[sf::Keyboard::Key::Up] = false;
-		keys[sf::Keyboard::Key::Down] = false;
-		keys[sf::Keyboard::Key::Return] = false;
-		keys[sf::Keyboard::Key::Space] = false;
 
 		auto size = board.GetColsRows();
 		cols = size.first;

@@ -40,3 +40,9 @@ bool KeyInput::KeyPressed(sf::Keyboard::Key key)
 	keys.at(key).pressed = false; // Eat input
 	return result;
 }
+
+
+bool KeyInput::Return()
+{
+	return KeyPressed(sf::Keyboard::Key::Return);
+}

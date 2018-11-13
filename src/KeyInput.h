@@ -30,4 +30,5 @@ public:
 
 	void Update();
 	bool KeyPressed(sf::Keyboard::Key key);
+	bool Return(); // Special case for brevity
 };

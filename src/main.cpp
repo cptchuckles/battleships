@@ -138,7 +138,7 @@ void gameSetup()
 	builder->Update();
 	builder->DrawBoard(window);
 
-	if(KeyInput::Get().KeyPressed(sf::Keyboard::Key::Return))
+	if(KeyInput::Get().Return())
 	{
 		if(builder->FinalizeShip())
 			ships--;
@@ -170,7 +170,7 @@ void inPlay()
 	prompt.SetCaption("Try cell: ");
 	prompt.Update();
 
-	if(KeyInput::Get().KeyPressed(sf::Keyboard::Key::Return))
+	if(KeyInput::Get().Return())
 	{
 		auto cell = board_1.GetCellFromString(prompt.GetContent());
 		if(cell) board_1.Attack(cell.value());
@@ -187,7 +187,7 @@ void atWinScreen()
 	prompt.SetCaption("You win! Again (y/n)? ");
 	prompt.Update();
 
-	if(KeyInput::Get().KeyPressed(sf::Keyboard::Key::Return))
+	if(KeyInput::Get().Return())
 	{
 		auto answer = prompt.GetContent();
 

@@ -10,18 +10,6 @@
 #include "KeyInput.h"
 
 
-bool ShipBuilder::KeyPressed(sf::Keyboard::Key key)
-{
-	bool down = sf::Keyboard::isKeyPressed(key);
-
-	bool result = down && !keys.at(key);
-
-	keys.at(key) = down;
-
-	return result;
-}
-
-
 ShipBuilder::Ship* ShipBuilder::GetShip()
 {
 	return ship;
@@ -58,11 +46,13 @@ void ShipBuilder::Update()
 {
 	if(!ship) return;
 
-	// Movement deltas
-	int dc = KeyPressed(sf::Keyboard::Key::Right) - KeyPressed(sf::Keyboard::Key::Left);
-	int dr = KeyPressed(sf::Keyboard::Key::Down) - KeyPressed(sf::Keyboard::Key::Up);
+	auto& kb = KeyInput::Get();
 
-	if(KeyPressed(sf::Keyboard::Key::Space))
+	// Movement deltas
+	int dc = kb.KeyPressed(sf::Keyboard::Key::Right) - kb.KeyPressed(sf::Keyboard::Key::Left);
+	int dr = kb.KeyPressed(sf::Keyboard::Key::Down) - kb.KeyPressed(sf::Keyboard::Key::Up);
+
+	if(kb.KeyPressed(sf::Keyboard::Key::Space))
 		FlipShip();
 
 	ship->col += dc;
