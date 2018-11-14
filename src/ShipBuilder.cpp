@@ -3,11 +3,10 @@
  */
 
 #include <SFML/Graphics.hpp>
-#include <ctime>
-#include <random>
 #include <algorithm>
 #include "ShipBuilder.h"
 #include "KeyInput.h"
+#include "Utility.h"
 
 
 ShipBuilder::Ship* ShipBuilder::GetShip()
@@ -136,25 +135,15 @@ bool ShipBuilder::RandomShip(unsigned int length)
 {
 	if(! ConstructShip(length)) return false;
 
-	// Get system time resource
-	struct timespec tm;
-	clock_gettime(CLOCK_REALTIME, &tm);
-
-	// Create random num generator functors with clock nanoseconds as seed
-	std::minstd_rand0 e{tm.tv_nsec};
-	std::uniform_int_distribution<int> ud_c{0, cols-1};
-	std::uniform_int_distribution<int> ud_r{0, rows-1};
-	std::uniform_int_distribution<int> ud_v{0, 1};
-
-	ship->col = ud_c(e);
-	ship->row = ud_r(e);
-	ship->vertical = ud_v(e);
+	ship->col = util::Rand(0, cols-1);
+	ship->row = util::Rand(0, rows-1);
+	ship->vertical = util::Rand(0, 1);
 	ConfineShipToBoard();
 
 	while(!CheckSpaceFree(*ship)) {
-		ship->col = ud_c(e);
-		ship->row = ud_r(e);
-		ship->vertical = ud_v(e);
+		ship->col = util::Rand(0, cols-1);
+		ship->row = util::Rand(0, rows-1);
+		ship->vertical = util::Rand(0, 1);
 		ConfineShipToBoard();
 	}
 

@@ -85,8 +85,8 @@ x BUG: ship-laying object and prompt both independently test for return key, cau
 
 goal 4: enable enemy AI
 == GOAL MET: pending DEADLINE: Tue, 20/11/2018
-- enemy needs to attack player's board every turn
-- implement lose condition
+x enemy needs to attack player's board every turn
+x implement lose condition
 - attacks will be semi-random UNTIL AI makes a successful hit
 	- AI will not strike non-empty cells
 	- AI will check adjacent cells of any random hit

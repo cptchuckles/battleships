@@ -8,7 +8,8 @@ OBJS = \
 	src/Board.o \
 	src/InputPrompt.o \
 	src/ShipBuilder.o \
-	src/KeyInput.o
+	src/KeyInput.o \
+	src/AIController.o
 
 #Paths
 INCLUDE_PATHS = -IC:/tools/msys64/mingw64/include/SFML
@@ -41,10 +42,22 @@ src/main.o : \
 	src/Board.h \
 	src/InputPrompt.h \
 	src/ShipBuilder.h \
-	src/KeyInput.h
+	src/KeyInput.h \
+	src/AIController.h
 
-src/ShipBuilder.o : src/ShipBuilder.h src/KeyInput.h
-src/Board.o : src/Board.h src/IDrawable.h
+src/AIController.o : \
+	src/AIController.h \
+	src/Board.h
+
+src/ShipBuilder.o : \
+	src/ShipBuilder.h \
+	src/KeyInput.h \
+	src/Utility.h
+
+src/Board.o : \
+	src/Board.h \
+	src/IDrawable.h \
+	src/Utility.h
 
 src/InputPrompt.o : \
 	src/InputPrompt.h \

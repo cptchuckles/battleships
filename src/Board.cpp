@@ -3,8 +3,7 @@
  */
 
 #include <SFML/Graphics.hpp>
-#include <random>
-#include <ctime>
+#include "Utility.h"
 #include "Board.h"
 
 
@@ -179,17 +178,10 @@ void Board::RandomFill(unsigned int qt)
 	// qt > grid.size() will infinitely loop.
 	if(qt > grid.size()) return;
 
-	// Get system time resource
-	struct timespec tm;
-	clock_gettime(CLOCK_REALTIME, &tm);
-
-	// Create random num generator functor with clock nanoseconds as seed
-	std::minstd_rand0 e{tm.tv_nsec};
-	std::uniform_int_distribution<int> ud{0, grid.size()-1};
-
 	for(int i=0; i<qt; i++) {
-		int c = ud(e);
-		while(grid.at(c) == CellType::FULL) c = ud(e);
+		int c = util::Rand(0, grid.size()-1);
+		while(grid.at(c) == CellType::FULL)
+			c = util::Rand(0, grid.size()-1);
 
 		grid.at(c) = CellType::FULL;
 	}

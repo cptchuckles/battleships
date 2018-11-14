@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Board.h"
+#include "AIController.h"
 #include "InputPrompt.h"
 #include "ShipBuilder.h"
 #include "KeyInput.h"
@@ -15,7 +16,7 @@ const int WindowHeight = 1508;
 enum class GameState {
 	SETUP,
 	PLAY,
-	WIN
+	END
 };
 
 GameState state = GameState::SETUP;
@@ -28,17 +29,18 @@ sf::RenderWindow window = {
 
 
 sf::Font arial;
-
 sf::Text caption = {"aeiou", arial, 48U};
-
 InputPrompt prompt = {"wew lads", caption, 0,1424};
 
 sf::CircleShape open{32};
 sf::CircleShape full{32};
 sf::CircleShape miss{32};
 sf::CircleShape hit{32};
+
 Board board_1{64, 9,10, 64,64, open, full, miss, hit};
 Board board_2{64, 9,10, 64,770, open, full, miss, hit};
+AIController ai = {board_2};
+
 std::vector<IDrawable*> renderer;
 
 bool init();
@@ -46,7 +48,7 @@ void gameReset();
 void gameSetup();
 void buildEnemyShips();
 void inPlay();
-void atWinScreen();
+void atEndScreen();
 
 int main()
 {
@@ -73,8 +75,8 @@ int main()
 		case GameState::PLAY :
 			inPlay();
 			break;
-		case GameState::WIN :
-			atWinScreen();
+		case GameState::END :
+			atEndScreen();
 			break;
 		}
 
@@ -173,18 +175,31 @@ void inPlay()
 	if(KeyInput::Get().Return())
 	{
 		auto cell = board_1.GetCellFromString(prompt.GetContent());
-		if(cell) board_1.Attack(cell.value());
-
-		if(board_1.CheckDefeated()) state = GameState::WIN;
-
 		prompt.ClearInput();
+
+		if(! cell) return;
+
+		board_1.Attack(cell.value());
+
+		if(board_1.CheckDefeated()) {
+			prompt.SetCaption("You Win! Again? (y/n): ");
+			state = GameState::END;
+			return;
+		}
+
+		ai.Strike();
+
+		if(board_2.CheckDefeated()) {
+			prompt.SetCaption("You Lost! Again? (y/n): ");
+			state = GameState::END;
+		}
+
 	}
 }
 
 
-void atWinScreen()
+void atEndScreen()
 {
-	prompt.SetCaption("You win! Again (y/n)? ");
 	prompt.Update();
 
 	if(KeyInput::Get().Return())
