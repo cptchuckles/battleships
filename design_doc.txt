@@ -87,10 +87,10 @@ goal 4: enable enemy AI
 == GOAL MET: pending DEADLINE: Tue, 20/11/2018
 x enemy needs to attack player's board every turn
 x implement lose condition
-- attacks will be semi-random UNTIL AI makes a successful hit
-	- AI will not strike non-empty cells
-	- AI will check adjacent cells of any random hit
+~ attacks will be semi-random UNTIL AI makes a successful hit
+	x AI will not strike non-empty cells
+	x AI will check adjacent cells of any random hit
 	- AI will keep track, from smallest to largest, of which ships have probably been sunk
 		- will count adjacencies and check for edges with misses
-		- maybe this testing will be a whole "mode" for the AI to be in in any given turn
+		~ maybe this testing will be a whole "mode" for the AI to be in in any given turn
 	- AI will not strike in an open area smaller than the smallest non-sunk ship

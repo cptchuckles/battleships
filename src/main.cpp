@@ -39,7 +39,7 @@ sf::CircleShape hit{32};
 
 Board board_1{64, 9,10, 64,64, open, full, miss, hit};
 Board board_2{64, 9,10, 64,770, open, full, miss, hit};
-AIController ai = {board_2};
+AIController ai = {board_2, 0};
 
 std::vector<IDrawable*> renderer;
 
@@ -48,6 +48,7 @@ void gameReset();
 void gameSetup();
 void buildEnemyShips();
 void inPlay();
+void enemyTurn();
 void atEndScreen();
 
 int main()
@@ -119,6 +120,7 @@ bool init()
 void gameReset()
 {
 	board_1.Clear();
+	board_1.SetHidden(true);
 	board_2.Clear();
 	prompt.ClearInput();
 	state = GameState::SETUP;
@@ -169,6 +171,11 @@ void buildEnemyShips()
 
 void inPlay()
 {
+	if(ai.isMyTurn()) {
+		enemyTurn();
+		return;
+	}
+
 	prompt.SetCaption("Try cell: ");
 	prompt.Update();
 
@@ -177,9 +184,9 @@ void inPlay()
 		auto cell = board_1.GetCellFromString(prompt.GetContent());
 		prompt.ClearInput();
 
-		if(! cell) return;
+		//if(! cell) return;
 
-		board_1.Attack(cell.value());
+		if(cell) board_1.Attack(cell.value());
 
 		if(board_1.CheckDefeated()) {
 			prompt.SetCaption("You Win! Again? (y/n): ");
@@ -187,19 +194,27 @@ void inPlay()
 			return;
 		}
 
-		ai.Strike();
+		ai.ActivateTurn();
+	}
+}
 
+
+void enemyTurn()
+{
+	prompt.SetCaption("Enemy AI thinking...");
+
+	if(ai.Strike()) {
 		if(board_2.CheckDefeated()) {
 			prompt.SetCaption("You Lost! Again? (y/n): ");
 			state = GameState::END;
 		}
-
 	}
 }
 
 
 void atEndScreen()
 {
+	board_1.SetHidden(false);
 	prompt.Update();
 
 	if(KeyInput::Get().Return())

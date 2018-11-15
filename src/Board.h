@@ -28,6 +28,10 @@ public:
 
 	struct Cell {
 		int col, row;
+		bool operator==(Cell const& in) { return (col==in.col && row==in.row); }
+		bool operator!=(Cell const& in) { return !operator==(in); }
+		friend Cell operator+(const Cell& a, const Cell& b) { return std::move(Cell{a.col+b.col, a.row+b.row}); }
+		friend Cell operator-(const Cell& a, const Cell& b) { return std::move(Cell{a.col-b.col, a.row-b.row}); }
 	};
 
 private:

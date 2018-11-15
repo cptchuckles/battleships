@@ -87,7 +87,7 @@ void Board::Draw(sf::RenderTarget& target) const
 
 bool Board::SetCell(int col, int row, CellType type)
 {
-	if(col > cols || row > rows || col < 0 || row < 0)
+	if(col > cols-1 || row > rows-1 || col < 0 || row < 0)
 		return false;
 
 	int cell = cols*row + col;
@@ -99,7 +99,7 @@ bool Board::SetCell(int col, int row, CellType type)
 
 std::optional<Board::CellType> Board::GetCell(int col, int row)
 {
-	if(col > cols || row > rows || col < 0 || row < 0)
+	if(col > cols-1 || row > rows-1 || col < 0 || row < 0)
 		return std::nullopt;
 
 	int cell = cols*row + col;
