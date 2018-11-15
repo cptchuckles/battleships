@@ -39,7 +39,7 @@ sf::CircleShape hit{32};
 
 Board board_1{64, 9,10, 64,64, open, full, miss, hit};
 Board board_2{64, 9,10, 64,770, open, full, miss, hit};
-AIController ai = {board_2, 0};
+AIController ai = {board_2, 2};
 
 std::vector<IDrawable*> renderer;
 
@@ -184,9 +184,9 @@ void inPlay()
 		auto cell = board_1.GetCellFromString(prompt.GetContent());
 		prompt.ClearInput();
 
-		//if(! cell) return;
+		if(! cell) return;
 
-		if(cell) board_1.Attack(cell.value());
+		board_1.Attack(cell.value());
 
 		if(board_1.CheckDefeated()) {
 			prompt.SetCaption("You Win! Again? (y/n): ");
