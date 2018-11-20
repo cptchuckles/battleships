@@ -19,7 +19,7 @@ namespace util
 		clock_gettime(CLOCK_REALTIME, &tm);
 
 		// Get rand num generator engine & functor with clock nanosec as seed
-		std::minstd_rand0 e{tm.tv_nsec};
+		static std::minstd_rand0 e{tm.tv_nsec};
 		std::uniform_int_distribution<int> ud{low, high};
 
 		return ud(e);

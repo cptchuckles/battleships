@@ -66,11 +66,17 @@ Board::Cell AIController::CalculateCell()
 			try_cells.erase(try_cells.begin()+i);
 		} else {
 			mode = Mode::RAND;
+			c = RandomValidCell();
 		}
 		break;
 
 	case Mode::TRACE :
-		c = NextCellInTrace();
+		auto oc = NextCellInTrace();
+		if(oc) c = oc.value();
+		else {
+			mode = Mode::SEARCH;
+			c = CalculateCell();
+		}
 	}
 
 	return c;
@@ -91,15 +97,15 @@ Board::Cell AIController::RandomValidCell() const
 }
 
 
-Board::Cell AIController::NextCellInTrace() const
+std::optional<Board::Cell> AIController::NextCellInTrace() const
 {
-	if(!last_hit) return RandomValidCell();
+	if(!last_hit) return { RandomValidCell() };
 
 	auto cell = last_hit.value() + rel_move;
 
-	if(! CheckCellValid(cell)) return RandomValidCell();
+	if(! CheckCellValid(cell)) return std::nullopt;
 
-	return cell;
+	return {cell};
 }
 
 

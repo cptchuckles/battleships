@@ -34,7 +34,7 @@ class AIController
 	bool CheckCellValid(const Board::Cell& cell) const;
 	std::vector<Board::Cell> GetAdjacentCells(const Board::Cell& cell);
 	Board::Cell RandomValidCell() const;
-	Board::Cell NextCellInTrace() const;
+	std::optional<Board::Cell> NextCellInTrace() const;
 	Board::Cell CalculateCell();
 
 public:

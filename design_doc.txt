@@ -94,3 +94,11 @@ x implement lose condition
 		- will count adjacencies and check for edges with misses
 		~ maybe this testing will be a whole "mode" for the AI to be in in any given turn
 	- AI will not strike in an open area smaller than the smallest non-sunk ship
+
+i'm not going to implement all the ship-counting stuff.
+Dumb AI works well enough: when it finds a hit, it checks adjacencies;
+it then traces in the direction of the next adjacent hit;
+when it runs into another miss, it revisits the first hit, and goes back
+to checking adjacencies there in case it finds more.
+If there are no more open adjacencies to the initial hit, it resumes
+striking randomly.
