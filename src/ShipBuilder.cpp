@@ -9,7 +9,7 @@
 #include "Utility.h"
 
 
-ShipBuilder::Ship* ShipBuilder::GetShip()
+ShipBuilder::Ship* ShipBuilder::GetShip() const
 {
 	return ship;
 }
@@ -26,7 +26,7 @@ bool ShipBuilder::ConstructShip(unsigned int length)
 }
 
 
-bool ShipBuilder::CheckSpaceFree(Ship& s)
+bool ShipBuilder::CheckSpaceFree(Ship& s) const
 {
 	int c = s.col;
 	int r = s.row;
@@ -41,7 +41,7 @@ bool ShipBuilder::CheckSpaceFree(Ship& s)
 }
 
 
-void ShipBuilder::Update()
+void ShipBuilder::Update(sf::RenderTarget& target)
 {
 	if(!ship) return;
 
@@ -58,6 +58,7 @@ void ShipBuilder::Update()
 	ship->row += dr;
 
 	ConfineShipToBoard();
+	DrawBoard(target);
 }
 
 

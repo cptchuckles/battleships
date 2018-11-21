@@ -12,6 +12,7 @@
 
 const int WindowWidth = 640;
 const int WindowHeight = 1508;
+const int shipSizes[] = {2,3,3,4,5};
 
 enum class GameState {
 	SETUP,
@@ -133,14 +134,12 @@ void gameSetup()
 
 	static ShipBuilder* builder = nullptr;
 	static int ships = 4;
-	int shipSizes[] = {2,3,3,4,5};
 
 	if(! builder) builder = new ShipBuilder{board_2};
 
 	if(! builder->GetShip()) builder->ConstructShip(shipSizes[ships]);
 
-	builder->Update();
-	builder->DrawBoard(window);
+	builder->Update(window);
 
 	if(KeyInput::Get().Return())
 	{
@@ -161,7 +160,6 @@ void gameSetup()
 
 void buildEnemyShips()
 {
-	int shipSizes[] = {2,3,3,4,5};
 	ShipBuilder builder = {board_1};
 
 	for(int i=0; i<5; i++)

@@ -9,10 +9,10 @@
 
 AIController::AIController(Board& target, int delay) : target{target}, delay{delay}
 {
-	auto dim = target.GetColsRows();
+	auto dim = target.GetDimensions();
 
-	cols = dim.first;
-	rows = dim.second;
+	cols = dim.col;
+	rows = dim.row;
 
 	clock_gettime(CLOCK_REALTIME, &timestamp);
 }

@@ -29,16 +29,17 @@ private:
 
 	void FlipShip();
 	void ConfineShipToBoard();
-	bool CheckSpaceFree(Ship&);
+	bool CheckSpaceFree(Ship&) const;
+	void DrawBoard(sf::RenderTarget& target);
 
 public:
 	ShipBuilder(Board& board) : board{board}
 	{
 		board.SetDraw(false);
 
-		auto size = board.GetColsRows();
-		cols = size.first;
-		rows = size.second;
+		auto size = board.GetDimensions();
+		cols = size.col;
+		rows = size.row;
 	}
 	~ShipBuilder()
 	{
@@ -53,12 +54,11 @@ public:
 	}
 
 
-	void Update();
+	void Update(sf::RenderTarget& target);
 
 	bool ConstructShip(unsigned int length);
 	bool RandomShip(unsigned int length);
 	bool FinalizeShip();
 
-	Ship* GetShip();
-	void DrawBoard(sf::RenderTarget& target);
+	Ship* GetShip() const;
 };

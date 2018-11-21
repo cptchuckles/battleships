@@ -97,7 +97,7 @@ bool Board::SetCell(int col, int row, CellType type)
 }
 
 
-std::optional<Board::CellType> Board::GetCell(int col, int row)
+std::optional<Board::CellType> Board::GetCell(int col, int row) const
 {
 	if(col > cols-1 || row > rows-1 || col < 0 || row < 0)
 		return std::nullopt;
@@ -107,7 +107,7 @@ std::optional<Board::CellType> Board::GetCell(int col, int row)
 }
 
 
-std::optional<Board::Cell> Board::GetCellFromString(std::string input)
+std::optional<Board::Cell> Board::GetCellFromString(std::string input) const
 {
 	Cell cell = { 0,0 };
 
@@ -132,9 +132,9 @@ std::optional<Board::Cell> Board::GetCellFromString(std::string input)
 }
 
 
-std::pair<int, int> Board::GetColsRows()
+Board::Cell Board::GetDimensions() const
 {
-	return std::make_pair(cols, rows);
+	return {cols, rows};
 }
 
 
@@ -163,7 +163,7 @@ bool Board::Attack(int col, int row)
 }
 
 
-bool Board::CheckDefeated()
+bool Board::CheckDefeated() const
 {
 	for(auto c : grid)
 		if(c == CellType::FULL)

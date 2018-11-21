@@ -6,7 +6,6 @@
 
 #include <vector>
 #include <optional>
-#include <utility>
 #include "IDrawable.h"
 
 namespace sf {
@@ -64,13 +63,13 @@ public:
 	}
 
 	bool SetCell(int col, int row, CellType);
-	std::optional<CellType> GetCell(int col, int row);
-	std::optional<Cell> GetCellFromString(std::string input);
-	std::pair<int, int> GetColsRows();
+	std::optional<CellType> GetCell(int col, int row) const;
+	std::optional<Cell> GetCellFromString(std::string input) const;
+	Cell GetDimensions() const;
 
 	bool Attack(int col, int row);
 	bool Attack(Cell);
-	bool CheckDefeated();
+	bool CheckDefeated() const;
 
 	void SetDisplayResource(sf::Text* TextResource);
 	void SetHidden(bool);
