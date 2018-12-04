@@ -14,15 +14,15 @@ KeyInput& KeyInput::Get()
 
 void KeyInput::Update()
 {
-	for(auto key : keys)
+	for(auto& [key, keypress] : keys)
 	{
-		bool down = sf::Keyboard::isKeyPressed(key.first);
+		bool down = sf::Keyboard::isKeyPressed(key);
 
-		keys.at(key.first).pressed = false;
-		if(down && !key.second.isdown)
-			keys.at(key.first).pressed = true;
+		keypress.pressed = false;
+		if(down && !keypress.isdown)
+			keypress.pressed = true;
 
-		keys.at(key.first).isdown = down;
+		keypress.isdown = down;
 	}
 }
 
