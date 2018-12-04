@@ -9,9 +9,10 @@
 #include "ShipBuilder.h"
 #include "KeyInput.h"
 
+const int CellSize = 32; //pixels
 
-const int WindowWidth = 640;
-const int WindowHeight = 1508;
+const int WindowWidth = 10*CellSize;
+const int WindowHeight = 24*CellSize;
 const int shipSizes[] = {2,3,3,4,5};
 
 enum class GameState {
@@ -30,16 +31,21 @@ sf::RenderWindow window = {
 
 
 sf::Font arial;
-sf::Text caption = {"aeiou", arial, 48U};
-InputPrompt prompt = {"wew lads", caption, 0,1424};
+sf::Text caption = {"aeiou", arial, (CellSize*3)/4};
+InputPrompt prompt = {"wew lads", caption, 0,23*CellSize};
 
-sf::CircleShape open{32};
-sf::CircleShape full{32};
-sf::CircleShape miss{32};
-sf::CircleShape hit{32};
+sf::CircleShape open{CellSize/2};
+sf::CircleShape full{CellSize/2};
+sf::CircleShape miss{CellSize/2};
+sf::CircleShape hit{CellSize/2};
 
-Board board_1{64, 9,10, 64,64, open, full, miss, hit};
-Board board_2{64, 9,10, 64,770, open, full, miss, hit};
+Board board_1 {CellSize, 9,10,
+               CellSize,CellSize,
+							 open, full, miss, hit};
+Board board_2 {CellSize, 9,10,
+               CellSize,CellSize * 12,
+							 open, full, miss, hit};
+//Board board_2{CellSize, 9,10, CellSize,192, open, full, miss, hit}; //64,770
 AIController ai = {board_2, 2};
 
 std::vector<IDrawable*> renderer;
