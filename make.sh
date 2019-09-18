@@ -1,4 +1,4 @@
-target=`grep "TARGET=" makefile | cut -d= -f2`
+target=$(grep "TARGET=" makefile | cut -d= -f2)
 
 if [ -f $target ]; then
 	rm -f $target
@@ -8,4 +8,4 @@ if [ ! -d "build" ]; then
 	mkdir build
 fi
 
-mingw32-make.exe all
+make all

@@ -1,6 +1,6 @@
 #TARGET is the name of the application
 #Remove spaces for make.sh
-TARGET=build/a.exe
+TARGET=build/battleships
 
 #OBJS is the name(s) of the source files
 OBJS = \
@@ -12,18 +12,18 @@ OBJS = \
 	src/AIController.o
 
 #Paths
-INCLUDE_PATHS = -IC:/tools/msys64/mingw64/include/SFML
-LIB_PATHS = -LC:/tools/msys64/mingw64/lib
+INCLUDE_PATHS = -I/usr/include/SFML
+LIB_PATHS = -L/usr/lib
 
 #Compiler and linker flags
-COMPILER_FLAGS = -w -std=c++17 #-mwindows
-LINKER_FLAGS = -llibsfml-graphics -llibsfml-audio -llibsfml-network -llibsfml-system -llibsfml-window
+COMPILER_FLAGS = -w -std=c++17
+LINKER_FLAGS = -lsfml-graphics -lsfml-audio -lsfml-network -lsfml-system -lsfml-window
 
 
 
 #Cleanup task
 clean :
-	rm -f build/*.exe src/*.o
+	rm -f build/* src/*.o
 	ls -RF
 
 all : $(TARGET)
