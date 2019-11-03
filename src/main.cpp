@@ -39,14 +39,14 @@ sf::CircleShape full{CellSize/2};
 sf::CircleShape miss{CellSize/2};
 sf::CircleShape hit{CellSize/2};
 
-Board board_1 {CellSize, 9,10,
+Board board_CPU {CellSize, 9,10,
                CellSize,CellSize,
                open, full, miss, hit};
-Board board_2 {CellSize, 9,10,
+Board board_player {CellSize, 9,10,
                CellSize,CellSize * 12,
                open, full, miss, hit};
 
-AIController ai = {board_2, 2};
+AIController ai = {board_player, 2};
 
 std::vector<IDrawable*> renderer;
 
@@ -111,13 +111,13 @@ bool init()
   miss.setFillColor(sf::Color::White);
   hit.setFillColor(sf::Color::Red);
 
-  board_1.SetDisplayResource(&caption);
-  board_2.SetDisplayResource(&caption);
+  board_CPU.SetDisplayResource(&caption);
+  board_player.SetDisplayResource(&caption);
 
-  board_1.SetHidden(true);
+  board_CPU.SetHidden(true);
 
-  renderer.push_back(&board_1);
-  renderer.push_back(&board_2);
+  renderer.push_back(&board_CPU);
+  renderer.push_back(&board_player);
   renderer.push_back(&prompt);
 
   return true;
@@ -126,9 +126,9 @@ bool init()
 
 void gameReset()
 {
-  board_1.Clear();
-  board_1.SetHidden(true);
-  board_2.Clear();
+  board_CPU.Clear();
+  board_CPU.SetHidden(true);
+  board_player.Clear();
   prompt.ClearInput();
   state = GameState::SETUP;
 }
@@ -141,7 +141,7 @@ void gameSetup()
   static ShipBuilder* builder = nullptr;
   static int ships = 4;
 
-  if(! builder) builder = new ShipBuilder{board_2};
+  if(! builder) builder = new ShipBuilder{board_player};
 
   if(! builder->GetShip()) builder->ConstructShip(shipSizes[ships]);
 
@@ -166,7 +166,7 @@ void gameSetup()
 
 void buildEnemyShips()
 {
-  ShipBuilder builder = {board_1};
+  ShipBuilder builder = {board_CPU};
 
   for(int i=0; i<5; i++)
     builder.RandomShip(shipSizes[i]);
@@ -185,7 +185,7 @@ void inPlay()
 
   if(KeyInput::Get().Return())
   {
-    auto cell = board_1.GetCellFromString(prompt.GetContent());
+    auto cell = board_CPU.GetCellFromString(prompt.GetContent());
     prompt.ClearInput();
 
     if(! cell) {
@@ -194,12 +194,12 @@ void inPlay()
     }
     auto c = cell.value();
     
-    if(board_1.GetCellType(c).value() == Board::CellType::HIT ||
-       board_1.GetCellType(c).value() == Board::CellType::MISS ) return;
+    if(board_CPU.GetCellType(c).value() == Board::CellType::HIT ||
+       board_CPU.GetCellType(c).value() == Board::CellType::MISS ) return;
 
-    board_1.Attack(c);
+    board_CPU.Attack(c);
 
-    if(board_1.CheckDefeated()) {
+    if(board_CPU.CheckDefeated()) {
       prompt.SetCaption("You Win! Again? (y/n): ");
       state = GameState::END;
       return;
@@ -215,7 +215,7 @@ void enemyTurn()
   prompt.SetCaption("Enemy AI thinking...");
 
   if(ai.Strike()) {
-    if(board_2.CheckDefeated()) {
+    if(board_player.CheckDefeated()) {
       prompt.SetCaption("You Lost! Again? (y/n): ");
       state = GameState::END;
     }
@@ -225,7 +225,7 @@ void enemyTurn()
 
 void atEndScreen()
 {
-  board_1.SetHidden(false);
+  board_CPU.SetHidden(false);
   prompt.Update();
 
   if(KeyInput::Get().Return())
