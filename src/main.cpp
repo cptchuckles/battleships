@@ -231,6 +231,7 @@ void atEndScreen()
   if(KeyInput::Get().Return())
   {
     auto answer = prompt.GetContent();
+    prompt.ClearInput();
 
     if(answer=="Y")
       gameReset();
