@@ -18,9 +18,7 @@ void KeyInput::Update()
   {
     bool down = sf::Keyboard::isKeyPressed(key);
 
-    keypress.pressed = false;
-    if(down && !keypress.isdown)
-      keypress.pressed = true;
+    keypress.pressed = down && !keypress.isdown;
 
     keypress.isdown = down;
   }
