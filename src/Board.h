@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <optional>
+#include <string>
 #include "IDrawable.h"
 
 namespace sf {
