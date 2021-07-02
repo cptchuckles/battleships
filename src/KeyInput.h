@@ -12,23 +12,23 @@
 class KeyInput
 {
 public:
-  struct Keystroke {
-    bool pressed=false;
-    bool isdown=false;
-  };
+	struct Keystroke {
+		bool pressed=false;
+		bool isdown=false;
+	};
 
 private:
-  std::map<sf::Keyboard::Key, Keystroke> keys;
+	std::map<sf::Keyboard::Key, Keystroke> keys;
 
-  KeyInput() {};
+	KeyInput() {};
 public:
-  KeyInput(KeyInput const&)    = delete;
-  KeyInput(KeyInput const&&)    = delete;
-  void operator=(KeyInput const&)  = delete;
+	KeyInput(KeyInput const&)		 = delete;
+	KeyInput(KeyInput const&&)		= delete;
+	void operator=(KeyInput const&)  = delete;
 
-  static KeyInput& Get();
+	static KeyInput& Get();
 
-  void Update();
-  bool KeyPressed(sf::Keyboard::Key key);
-  bool Return(); // Special case for brevity
+	void Update();
+	bool KeyPressed(sf::Keyboard::Key key);
+	bool Return(); // Special case for brevity
 };

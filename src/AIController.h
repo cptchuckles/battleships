@@ -11,37 +11,37 @@
 
 class AIController
 {
-  Board& target;
-  int cols, rows, delay;
+	Board& target;
+	int cols, rows, delay;
 
-  enum class Mode {
-    RAND,
-    SEARCH,
-    TRACE
-  };
+	enum class Mode {
+		RAND,
+		SEARCH,
+		TRACE
+	};
 
-  std::optional<Board::Cell> cold_hit = std::nullopt;
-  std::optional<Board::Cell> last_hit = std::nullopt;
-  Board::Cell rel_move = {0,0};
-  std::vector<Board::Cell> try_cells;
-  bool streak = false;
-  Mode mode = Mode::RAND;
+	std::optional<Board::Cell> cold_hit = std::nullopt;
+	std::optional<Board::Cell> last_hit = std::nullopt;
+	Board::Cell rel_move = {0,0};
+	std::vector<Board::Cell> try_cells;
+	bool streak = false;
+	Mode mode = Mode::RAND;
 
-  struct timespec timestamp;
-  bool myturn = false;
-  bool CheckDelayTimer();
+	struct timespec timestamp;
+	bool myturn = false;
+	bool CheckDelayTimer();
 
-  bool CheckCellValid(const Board::Cell& cell) const;
-  std::vector<Board::Cell> GetAdjacentCells(const Board::Cell& cell);
-  Board::Cell RandomValidCell() const;
-  std::optional<Board::Cell> NextCellInTrace() const;
-  Board::Cell CalculateCell();
+	bool CheckCellValid(const Board::Cell& cell) const;
+	std::vector<Board::Cell> GetAdjacentCells(const Board::Cell& cell);
+	Board::Cell RandomValidCell() const;
+	std::optional<Board::Cell> NextCellInTrace() const;
+	Board::Cell CalculateCell();
 
 public:
-  AIController() = delete;
-  AIController(Board& target, int delay);
+	AIController() = delete;
+	AIController(Board& target, int delay);
 
-  bool Strike();
-  bool isMyTurn() const;
-  void ActivateTurn();
+	bool Strike();
+	bool isMyTurn() const;
+	void ActivateTurn();
 };

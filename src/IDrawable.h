@@ -7,11 +7,11 @@
 #pragma once
 
 namespace sf {
-  class RenderTarget;
+	class RenderTarget;
 }
 
 class IDrawable
 {
 public:
-  virtual void Draw(sf::RenderTarget& target) const = 0;
+	virtual void Draw(sf::RenderTarget& target) const = 0;
 };
