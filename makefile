@@ -24,13 +24,12 @@ LINKER_FLAGS = -lsfml-graphics -lsfml-audio -lsfml-network -lsfml-system -lsfml-
 #Cleanup task
 clean :
 	rm -f build/* src/*.o
-	ls -RF
 
 all : $(TARGET)
-	ls build
 
 #Build task:
 $(TARGET) : $(OBJS)
+	mkdir -p build
 	g++ -o $(TARGET) $(OBJS) $(INCLUDE_PATHS) $(LIB_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS)
 
 #Build objects
