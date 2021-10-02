@@ -126,7 +126,7 @@ void ShipBuilder::DrawBoard(sf::RenderTarget& target)
 			c += !ship->vertical;
 			r += ship->vertical;
 		}
-	} // if ship
+	}
 
 	temp.Draw(target);
 }

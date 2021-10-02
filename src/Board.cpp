@@ -88,7 +88,7 @@ void Board::Draw(sf::RenderTarget& target) const
 
 bool Board::SetCell(int col, int row, CellType type)
 {
-	if(col > cols-1 || row > rows-1 || col < 0 || row < 0)
+	if(col >= cols || row >= rows || col < 0 || row < 0)
 		return false;
 
 	int cell = cols*row + col;

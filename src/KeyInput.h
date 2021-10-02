@@ -22,9 +22,9 @@ private:
 
 	KeyInput() {};
 public:
-	KeyInput(KeyInput const&)		 = delete;
-	KeyInput(KeyInput const&&)		= delete;
-	void operator=(KeyInput const&)  = delete;
+	KeyInput(KeyInput const&)       = delete;
+	KeyInput(KeyInput const&&)      = delete;
+	void operator=(KeyInput const&) = delete;
 
 	static KeyInput& Get();
 

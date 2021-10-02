@@ -136,8 +136,7 @@ bool AIController::CheckCellValid(const Board::Cell& cell) const
 
 	auto cellv = optcell.value();
 
-	return ( cellv != Board::CellType::MISS
-		&& cellv != Board::CellType::HIT );
+	return cellv & ~( Board::CellType::HIT | Board::CellType::MISS );
 }
 
 

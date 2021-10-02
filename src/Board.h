@@ -20,10 +20,10 @@ class Board : public IDrawable
 {
 public:
 	enum CellType {
-		OPEN,
-		FULL,
-		MISS,
-		HIT
+		OPEN = 1,
+		FULL = 2,
+		MISS = 4,
+		HIT  = 8
 	};
 
 	struct Cell {
