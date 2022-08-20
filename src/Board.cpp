@@ -3,8 +3,8 @@
  */
 
 #include <SFML/Graphics.hpp>
-#include "Utility.h"
-#include "Board.h"
+#include "Utility.hpp"
+#include "Board.hpp"
 
 
 void Board::SetDisplayResource(sf::Text* TextResource)

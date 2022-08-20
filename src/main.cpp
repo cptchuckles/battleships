@@ -3,11 +3,11 @@
  */
 
 #include <SFML/Graphics.hpp>
-#include "Board.h"
-#include "AIController.h"
-#include "InputPrompt.h"
-#include "ShipBuilder.h"
-#include "KeyInput.h"
+#include "Board.hpp"
+#include "AIController.hpp"
+#include "InputPrompt.hpp"
+#include "ShipBuilder.hpp"
+#include "KeyInput.hpp"
 
 const int CellSize = 32; //pixels
 

@@ -4,8 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
-#include "InputPrompt.h"
-#include "KeyInput.h"
+#include "InputPrompt.hpp"
+#include "KeyInput.hpp"
 
 
 void InputPrompt::Update()

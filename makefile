@@ -38,27 +38,27 @@ $(TARGET) : $(OBJS)
 
 #Define the prerequisites of each object
 src/main.o : \
-	src/Board.h \
-	src/InputPrompt.h \
-	src/ShipBuilder.h \
-	src/KeyInput.h \
-	src/AIController.h
+	src/Board.hpp \
+	src/InputPrompt.hpp \
+	src/ShipBuilder.hpp \
+	src/KeyInput.hpp \
+	src/AIController.hpp
 
 src/AIController.o : \
-	src/AIController.h \
-	src/Board.h
+	src/AIController.hpp \
+	src/Board.hpp
 
 src/ShipBuilder.o : \
-	src/ShipBuilder.h \
-	src/KeyInput.h \
-	src/Utility.h
+	src/ShipBuilder.hpp \
+	src/KeyInput.hpp \
+	src/Utility.hpp
 
 src/Board.o : \
-	src/Board.h \
-	src/IDrawable.h \
-	src/Utility.h
+	src/Board.hpp \
+	src/IDrawable.hpp \
+	src/Utility.hpp
 
 src/InputPrompt.o : \
-	src/InputPrompt.h \
-	src/IDrawable.h \
-	src/KeyInput.h
+	src/InputPrompt.hpp \
+	src/IDrawable.hpp \
+	src/KeyInput.hpp

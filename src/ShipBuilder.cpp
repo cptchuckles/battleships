@@ -4,9 +4,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <algorithm>
-#include "ShipBuilder.h"
-#include "KeyInput.h"
-#include "Utility.h"
+#include "ShipBuilder.hpp"
+#include "KeyInput.hpp"
+#include "Utility.hpp"
 
 
 ShipBuilder::Ship* ShipBuilder::GetShip() const

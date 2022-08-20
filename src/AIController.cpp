@@ -2,9 +2,9 @@
  * AI Controller implementation
  */
 
-#include "AIController.h"
-#include "Utility.h"
-#include "Board.h"
+#include "AIController.hpp"
+#include "Utility.hpp"
+#include "Board.hpp"
 
 
 AIController::AIController(Board& target, int delay) : target{target}, delay{delay}

@@ -2,7 +2,7 @@
  * Keyboard Input implementation
  */
 
-#include "KeyInput.h"
+#include "KeyInput.hpp"
 
 KeyInput& KeyInput::Get()
 {

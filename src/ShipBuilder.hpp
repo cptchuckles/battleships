@@ -7,7 +7,7 @@
 #pragma once
 
 #include <SFML/Window/Keyboard.hpp>
-#include "Board.h"
+#include "Board.hpp"
 
 namespace sf {
 	class RenderTarget;

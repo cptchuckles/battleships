@@ -7,7 +7,7 @@
 
 
 #include <string>
-#include "IDrawable.h"
+#include "IDrawable.hpp"
 
 namespace sf {
 	class Text;

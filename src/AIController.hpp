@@ -6,7 +6,7 @@
 #include <ctime>
 #include <optional>
 #include <vector>
-#include "Board.h"
+#include "Board.hpp"
 
 
 class AIController
