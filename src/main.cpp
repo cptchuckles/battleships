@@ -24,7 +24,8 @@ enum class GameState {
 GameState state = GameState::SETUP;
 
 
-sf::RenderWindow window = {
+sf::RenderWindow window
+{
 	sf::VideoMode(WindowWidth, WindowHeight),
 	"/g/ battleships"
 };
@@ -193,15 +194,12 @@ void inPlay()
 		auto cell = board_CPU.GetCellFromString(prompt.GetContent());
 		prompt.ClearInput();
 
-		if(! cell)
-		{
-			
-			return;
-		}
+		if(! cell) return;
+
 		auto c = cell.value();
 		
-		if(board_CPU.GetCellType(c).value() == Board::CellType::HIT ||
-			 board_CPU.GetCellType(c).value() == Board::CellType::MISS ) return;
+		if(board_CPU.GetCellType(c).value() & (Board::CellType::HIT | Board::CellType::MISS))
+			return;
 
 		board_CPU.Attack(c);
 
@@ -221,13 +219,10 @@ void enemyTurn()
 {
 	prompt.SetCaption("Enemy AI thinking...");
 
-	if(ai.Strike())
+	if(ai.Strike() && board_player.CheckDefeated())
 	{
-		if(board_player.CheckDefeated())
-		{
-			prompt.SetCaption("You Lost! Again? (y/n): ");
-			state = GameState::END;
-		}
+		prompt.SetCaption("You Lost! Again? (y/n): ");
+		state = GameState::END;
 	}
 }
 
